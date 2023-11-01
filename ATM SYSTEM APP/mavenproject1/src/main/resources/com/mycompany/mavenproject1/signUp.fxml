@@ -29,7 +29,7 @@
                </opaqueInsets>
             </ChoiceBox>
             <Label layoutX="14.0" layoutY="73.0" text="Prefix" textFill="#8b8c89" />
-            <Label alignment="CENTER" layoutX="131.0" layoutY="7.0" text="PERSONAL INFORMATION" textAlignment="CENTER" textFill="#6096ba" underline="true">
+            <Label fx:id="TOP_TEXT" alignment="CENTER" layoutY="14.0" prefWidth="600.0" text="PERSONAL INFORMATION" textAlignment="CENTER" textFill="#6096ba" underline="true">
                <font>
                   <Font name="Arial" size="24.0" />
                </font>
@@ -93,22 +93,22 @@
       </AnchorPane>
       <AnchorPane fx:id="cointanerPin" layoutY="70.0" prefHeight="330.0" prefWidth="600.0" visible="false">
          <children>
-            <AnchorPane prefHeight="330.0" prefWidth="300.0" style="-fx-background-color: #6096ba;">
+            <AnchorPane prefHeight="285.0" prefWidth="300.0" style="-fx-background-color: #a3cef1;">
                <children>
                   <Label layoutX="60.0" layoutY="87.0" text="Set a 5 digits pin" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" layoutX="65.0" layoutY="120.0" prefHeight="52.0" prefWidth="169.0" promptText="12345">
+                  <TextField fx:id="pinIn" alignment="CENTER" layoutX="65.0" layoutY="120.0" prefHeight="52.0" prefWidth="169.0" promptText="12345">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="submitbtn" layoutX="125.0" layoutY="180.0" mnemonicParsing="false" style="-fx-background-color: #a3cef1;" text="submit" textFill="WHITE" />
+                  <Button fx:id="submitbtn" layoutX="125.0" layoutY="180.0" mnemonicParsing="false" style="-fx-background-color: #6096ba;" text="submit" textFill="WHITE" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="300.0" prefHeight="330.0" prefWidth="300.0" style="-fx-background-color: #a3cef1;">
+            <AnchorPane layoutX="300.0" prefHeight="285.0" prefWidth="300.0" style="-fx-background-color: #a3cef1;">
                <children>
                   <Label fx:id="fingerText" layoutX="76.0" layoutY="87.0" text="Set a fingerprint" textFill="WHITE">
                      <font>
@@ -124,6 +124,11 @@
                   </Label>
                </children>
             </AnchorPane>
+            <Label fx:id="bottomNotiPin" contentDisplay="CENTER" layoutY="289.0" prefWidth="600.0" text="Please make sure you set atleast a pin!" textAlignment="CENTER" textFill="#274c77">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

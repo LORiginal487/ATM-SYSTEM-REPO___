@@ -12,9 +12,8 @@ import java.sql.*;
  */
 public class DatabaseHandler extends ConstantsDB{
     Connection dbCon;
-    private Connection con;
     PreparedStatement statement;
-    private int userId;
+    
 
     public Connection getDbCon() throws ClassNotFoundException, SQLException {
         String conString = "jdbc:mysql://" +DB_Host+ ":" +DB_Port+ "/" +DB_Name;
@@ -26,17 +25,22 @@ public class DatabaseHandler extends ConstantsDB{
         return dbCon;
     }
     //Inserting data into the database
-    public void writeToDB(String names, String user, String number, String mail, String pass) throws SQLException, ClassNotFoundException {
-        String insertQuery = "INSERT INTO users(fullName, userName, phoneNumber, email, password)" +
-                "VALUES(?,?,?,?,?)";
+    public void signUpDBsaver(String id,String name, String surname,String dob, String email, String phone, int pin, String accnum, Double balance) throws SQLException, ClassNotFoundException {
+        String insertQuery = "INSERT INTO "+DB_TB_Name+"("+TB_C_id+", "+TB_C_Name+", "+TB_C_Surname+
+                ", "+TB_C_DOB+", "+TB_C_Email+", "+TB_C_Phone+", "+TB_C_Pin+", "+TB_C_Accnum+", "+TB_C_Balance+")" +
+                "VALUES(?,?,?,?,?,?,?,?,?)";
 
         statement = (PreparedStatement) getDbCon().prepareStatement(insertQuery);
 
-        statement.setString(1, names);
-        statement.setString(2, user);
-        statement.setString(3, number);
-        statement.setString(4, mail);
-        statement.setString(5, pass);
+        statement.setString(1, id);
+        statement.setString(2, name);
+        statement.setString(3, surname);
+        statement.setString(4, dob);
+        statement.setString(5, email);
+        statement.setString(6, phone);
+        statement.setInt(7, pin);
+        statement.setString(8, accnum);
+        statement.setDouble(9, balance);
         statement.executeUpdate();
     }
     

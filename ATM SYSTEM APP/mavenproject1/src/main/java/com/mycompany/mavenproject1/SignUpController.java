@@ -2,6 +2,7 @@ package com.mycompany.mavenproject1;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,8 +15,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import utilities.ConstantVariables;
 
 public class SignUpController {
 
@@ -31,13 +35,13 @@ public class SignUpController {
     private AnchorPane cointanerPin;
 
     @FXML
-    private TextField dayIn,emailIn, emailInC,nameIn, phoneNoIn,phoneNoInC,snameIn,yearIn;
+    private TextField dayIn, emailIn, emailInC, nameIn, phoneNoIn, phoneNoInC, snameIn, yearIn,pinIn;
 
     @FXML
-    private Button fingerStartBtn,signInBck,signUpbtn,submitbtn;
+    private Button fingerStartBtn, signInBck, signUpbtn, submitbtn;
 
     @FXML
-    private Label fingerText, fingerWhenStarted;
+    private Label fingerText, fingerWhenStarted, TOP_TEXT,bottomNotiPin;
 
     @FXML
     private AnchorPane formContainer;
@@ -45,10 +49,9 @@ public class SignUpController {
     @FXML
     private Pane imageFinger;
 
-
     @FXML
     void initialize() {
-        asserts();
+        //asserts();
         choiceBoxes();
         onButtonPress();
     }
@@ -73,16 +76,21 @@ public class SignUpController {
         assert snameIn != null : "fx:id=\"snameIn\" was not injected: check your FXML file 'signUp.fxml'.";
         assert submitbtn != null : "fx:id=\"submitbtn\" was not injected: check your FXML file 'signUp.fxml'.";
         assert yearIn != null : "fx:id=\"yearIn\" was not injected: check your FXML file 'signUp.fxml'.";
+        assert TOP_TEXT != null : "fx:id=\"TOP_TEXT\" was not injected: check your FXML file 'signUp.fxml'.";
+        assert pinIn != null : "fx:id=\"pinIn\" was not injected: check your FXML file 'signUp.fxml'.";
+        assert bottomNotiPin != null : "fx:id=\"bottomNotiPin\" was not injected: check your FXML file 'signUp.fxml'.";
+
     }
 
     void choiceBoxes() {//this is for allowing the user to choose from choices in a choice box
         String[] genderPrf = {"Mr.", "Miss.", "Mrs."};
         gendersCB.getItems().addAll(genderPrf);
         String[] months = {"January", "February", "March", "April", "May", "June", "July",
-             "August", "September", "October", "November", "December"};
+            "August", "September", "October", "November", "December"};
         monthsCB.getItems().addAll(months);
 
     }
+
     private void onButtonPress() {//when you press a button
         signInBck.setOnAction((event) -> {
             signInBck.getScene().getWindow().hide();
@@ -99,7 +107,17 @@ public class SignUpController {
             stage.show();
         });
         signUpbtn.setOnAction((event) -> {
-            if (validateInfo()) {
+            if (validateForm()) {
+                formContainer.setVisible(false);
+                cointanerPin.setVisible(true);
+            }
+        });
+        fingerStartBtn.setOnAction((event) -> {
+            fingerWhenStarted.setVisible(true);
+            imageFinger.setVisible(true);
+        });
+        submitbtn.setOnAction((event) -> {
+            if (validateSecurity()) {
                 signUpbtn.getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("HomeW-Menu.fxml"));
@@ -112,12 +130,64 @@ public class SignUpController {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } 
+            }
         });
     }
 
-    private boolean validateInfo() {
+    private boolean validateSecurity() {
+        if(pinIn.getText().isEmpty()){
+            bottomNotiPin.setText("Please enter missing Values");
+                bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
+            return false;
+        }else if(pinIn.getText().length()!=5){
+            bottomNotiPin.setText("Please enter a 5 digit value");
+                bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
+            return false;
+            
+        }else if(!pinIn.getText().matches("\\d+")){
+            bottomNotiPin.setText("Please enter an only digits value");
+                bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
+            return false;
+        }else{
+        ConstantVariables.SU_PIN = Integer.parseInt(pinIn.getText());
         return true;
+        }
+    }
+
+    private boolean validateForm() {
+        boolean validate = true;
+        ConstantVariables.SU_NAME = nameIn.getText().toUpperCase();
+        ConstantVariables.SU_SURNAME = snameIn.getText().toUpperCase();
+        ConstantVariables.SU_EMAIL = emailIn.getText().toUpperCase();
+        ConstantVariables.SU_PHONE = phoneNoIn.getText().toUpperCase();
+        ConstantVariables.SU_DOB = dayIn.getText() + "/" + monthsCB.getValue() + "/" + yearIn.getText().trim();
+        ArrayList<TextField> inputs = new ArrayList<>();
+        inputs.add(nameIn);
+        inputs.add(snameIn);
+        inputs.add(emailIn);
+        inputs.add(phoneNoIn);
+        inputs.add(yearIn);
+        inputs.add(emailInC);
+        inputs.add(phoneNoInC);
+
+        for (int i = 0; i < inputs.size(); i++) {
+            if (inputs.get(i).getText().isEmpty()) {
+                TOP_TEXT.setText("Please enter missing Values");
+                TOP_TEXT.setTextFill(Paint.valueOf("#FF0000"));
+                validate = false;
+                break;
+            }
+        }
+        if(!emailIn.getText().trim().equals(emailInC.getText().trim())){
+            TOP_TEXT.setText("Please confirm email");
+                TOP_TEXT.setTextFill(Paint.valueOf("#FF0000"));
+            validate = false;
+        }else if(!phoneNoIn.getText().trim().equals(phoneNoInC.getText().trim())){
+            TOP_TEXT.setText("Please confirm phone number");
+                TOP_TEXT.setTextFill(Paint.valueOf("#FF0000"));
+            validate = false;
+        }
+        return validate;
     }
 
 }
