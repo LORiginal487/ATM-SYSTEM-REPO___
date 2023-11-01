@@ -16,8 +16,10 @@ public class ConstantVariables {
     public static  String SU_PHONE;
     public static  String SU_DOB;
     public static  String SU_ACCNUM;
-    public static  String SU_PIN;
-    public static  String SU_BALANCE;
+    public static  int SU_PIN;
+    public static  Double SU_BALANCE;
+    public static String ACC_NUM_STARTER = "48711";
+    public static int NUMBER_OF_USERS;
 
     
 }

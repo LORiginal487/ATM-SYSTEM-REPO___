@@ -118,6 +118,9 @@ public class SignUpController {
         });
         submitbtn.setOnAction((event) -> {
             if (validateSecurity()) {
+                generateID();
+                generateAccNum();
+                ConstantVariables.SU_BALANCE=0.0;
                 signUpbtn.getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("HomeW-Menu.fxml"));
@@ -188,6 +191,14 @@ public class SignUpController {
             validate = false;
         }
         return validate;
+    }
+    private void generateAccNum(){
+        int mid = 1000 + ConstantVariables.NUMBER_OF_USERS;
+        ConstantVariables.SU_ACCNUM = ConstantVariables.ACC_NUM_STARTER + ""+mid+"0";
+    }
+    private void generateID(){
+        ConstantVariables.SU_ID= ConstantVariables.SU_EMAIL.substring(0,5)+"487"+ConstantVariables.NUMBER_OF_USERS+1;
+        
     }
 
 }
