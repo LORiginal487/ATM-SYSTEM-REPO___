@@ -4,6 +4,10 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,48 +19,54 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import utilities.ConstantVariables;
 
 public class HomeWMenuController {
-
+    
     @FXML
     private ResourceBundle resources;
-
+    
     @FXML
     private URL location;
-
+    Image  image2, image3, image4, image5, image6;
     @FXML
-    private Label TOP_TEXT,TOP_TEXT1,TOP_TEXT2, TOP_TEXT21,TOP_TEXT211,TOP_TEXT2111,TOP_TEXT21111,accntnumDis;
+    private ImageView cbImg, dImg, wImg, tImg, psImg;
 
+    
     @FXML
-    private AnchorPane chckBalanceBar,depositBar;
-
+    private Label TOP_TEXT, TOP_TEXT1, TOP_TEXT2, TOP_TEXT21, TOP_TEXT211, TOP_TEXT2111, TOP_TEXT21111, accntnumDis;
+    
+    @FXML
+    private AnchorPane chckBalanceBar, depositBar;
+    
     @FXML
     private Label emailDis;
-
+    
     @FXML
     private AnchorPane formContainer;
-
+    
     @FXML
-    private Label headingText,nameDis,nameDis1,nameDis11,nameDis12,nameDis13,phoneDis;
-
+    private Label headingText, nameDis, nameDis1, nameDis11, nameDis12, nameDis13, phoneDis;
+    
     @FXML
-    private Button profileSettingsBtn,signInBck;
-
+    private Button profileSettingsBtn, signInBck;
+    
     @FXML
     private Label surnameDis;
-
+    
     @FXML
-    private AnchorPane transactBar,withdrawBar;
-
+    private AnchorPane transactBar, withdrawBar;
+    
     @FXML
     void initialize() {
-        
+        asserts();
         displayDetails();
         onButtonPress();
     }
+
     void asserts() {
         assert TOP_TEXT != null : "fx:id=\"TOP_TEXT\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
         assert TOP_TEXT1 != null : "fx:id=\"TOP_TEXT1\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
@@ -82,8 +92,9 @@ public class HomeWMenuController {
         assert surnameDis != null : "fx:id=\"surnameDis\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
         assert transactBar != null : "fx:id=\"transactBar\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
         assert withdrawBar != null : "fx:id=\"withdrawBar\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
-
+        
     }
+
     private void onButtonPress() {//when you press a button
         signInBck.setOnAction((event) -> {
             signInBck.getScene().getWindow().hide();
@@ -101,13 +112,18 @@ public class HomeWMenuController {
         });
         
     }
-    private void displayDetails(){
+
+    private void displayDetails() {
         nameDis.setText(ConstantVariables.SU_NAME);
         surnameDis.setText(ConstantVariables.SU_SURNAME);
         emailDis.setText(ConstantVariables.SU_EMAIL);
         phoneDis.setText(ConstantVariables.SU_PHONE);
         accntnumDis.setText(ConstantVariables.SU_ACCNUM);
     }
-    
+
+    private void setImages() {
+        
+    }
 }
+
 

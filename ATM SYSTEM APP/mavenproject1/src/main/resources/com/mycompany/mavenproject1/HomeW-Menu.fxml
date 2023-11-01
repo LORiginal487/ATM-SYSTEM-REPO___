@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.HomeWMenuController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0">
          <children>
@@ -22,9 +22,9 @@
                   <Button fx:id="signInBck" layoutX="18.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: #a3cef1;" text="Log Out" textFill="WHITE" />
                   <Button fx:id="profileSettingsBtn" layoutX="532.0" layoutY="9.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="43.0" style="-fx-background-color: #a3cef1;" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="psImg" fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../pics/settingsP.png" />
+                              <Image url="@settingsP.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -95,9 +95,9 @@
                   </Label>
                   <AnchorPane fx:id="depositBar" layoutX="279.0" layoutY="57.0" prefHeight="107.0" prefWidth="120.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <ImageView fitHeight="85.0" fitWidth="104.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="dImg" fitHeight="85.0" fitWidth="104.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../pics/images.png" />
+                              <Image url="@images.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="nameDis1" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="120.0" text="DEPOSIT" textAlignment="CENTER" textFill="#6096ba" underline="true">
@@ -109,9 +109,9 @@
                   </AnchorPane>
                   <AnchorPane fx:id="withdrawBar" layoutX="408.0" layoutY="57.0" prefHeight="107.0" prefWidth="165.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <ImageView fitHeight="64.0" fitWidth="125.0" layoutX="51.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="wImg" fitHeight="64.0" fitWidth="125.0" layoutX="51.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../pics/withdraw.png" />
+                              <Image url="@withdraw.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="nameDis11" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="165.0" text="WITHDRAW" textAlignment="CENTER" textFill="#6096ba" underline="true">
@@ -123,9 +123,9 @@
                   </AnchorPane>
                   <AnchorPane fx:id="transactBar" layoutX="281.0" layoutY="173.0" prefHeight="107.0" prefWidth="120.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <ImageView fitHeight="78.0" fitWidth="79.0" layoutX="21.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="tImg" fitHeight="78.0" fitWidth="79.0" layoutX="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../pics/tranansfer.png" />
+                              <Image url="@tranansfer.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="nameDis12" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="120.0" text="TRANSACT" textAlignment="CENTER" textFill="#6096ba" underline="true">
@@ -137,9 +137,9 @@
                   </AnchorPane>
                   <AnchorPane fx:id="chckBalanceBar" layoutX="408.0" layoutY="173.0" prefHeight="107.0" prefWidth="165.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <ImageView fitHeight="85.0" fitWidth="110.0" layoutX="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="cbImg" fitHeight="85.0" fitWidth="110.0" layoutX="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../pics/check_balance.png" />
+                              <Image url="@check_balance.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="nameDis13" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="165.0" text="CHECK BALANCE" textAlignment="CENTER" textFill="#6096ba" underline="true">

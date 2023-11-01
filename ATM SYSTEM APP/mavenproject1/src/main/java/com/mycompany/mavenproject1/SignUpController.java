@@ -1,7 +1,10 @@
 package com.mycompany.mavenproject1;
 
+import database.DatabaseHandler;
+import java.awt.Image;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
@@ -27,7 +31,8 @@ public class SignUpController {
     private ChoiceBox<String> gendersCB, monthsCB;
     @FXML
     private ResourceBundle resources;
-
+    
+    DatabaseHandler dbHandler;
     @FXML
     private URL location;
 
@@ -51,7 +56,8 @@ public class SignUpController {
 
     @FXML
     void initialize() {
-        //asserts();
+        dbHandler = new DatabaseHandler();
+        asserts();
         choiceBoxes();
         onButtonPress();
     }
@@ -121,6 +127,16 @@ public class SignUpController {
                 generateID();
                 generateAccNum();
                 ConstantVariables.SU_BALANCE=0.0;
+                try {
+                    dbHandler.signUpDBsaver(ConstantVariables.SU_ID, ConstantVariables.SU_NAME,
+                            ConstantVariables.SU_SURNAME, ConstantVariables.SU_DOB, ConstantVariables.SU_EMAIL,
+                            ConstantVariables.SU_PHONE, ConstantVariables.SU_PIN, ConstantVariables.SU_ACCNUM
+                            , ConstantVariables.SU_BALANCE);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 signUpbtn.getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("HomeW-Menu.fxml"));
@@ -200,6 +216,7 @@ public class SignUpController {
         ConstantVariables.SU_ID= ConstantVariables.SU_EMAIL.substring(0,5)+"487"+ConstantVariables.NUMBER_OF_USERS+1;
         
     }
+    
 
 }
 /*
