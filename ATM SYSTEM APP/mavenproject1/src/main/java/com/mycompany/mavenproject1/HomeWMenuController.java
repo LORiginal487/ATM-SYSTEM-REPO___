@@ -56,11 +56,11 @@ public class HomeWMenuController {
     
     @FXML
     private AnchorPane transactBar, withdrawBar;
-    ConstatnMethods constatnMethods;
+    //ConstatnMethods constatnMethods;
     
     @FXML
     void initialize() {
-        constatnMethods = new ConstatnMethods();
+        //constatnMethods = new ConstatnMethods();
         asserts();
         displayDetails();
         onButtonPress();
@@ -97,10 +97,10 @@ public class HomeWMenuController {
 
     private void onButtonPress() {//when you press a button
         signInBck.setOnAction((event) -> {
-            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_SI);
+            PageLoaderShow(signInBck,ConstantVariables.FXML_SI);
         });
         profileSettingsBtn.setOnAction((event) -> {
-            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_PS);
+            PageLoaderShow(signInBck,ConstantVariables.FXML_PS);
         });
         
     }
@@ -115,17 +115,31 @@ public class HomeWMenuController {
 
     private void ToDoSelection() {
         depositBar.setOnMouseClicked((event) -> {
-            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_D);
+            PageLoaderShow(signInBck,ConstantVariables.FXML_D);
         });
         withdrawBar.setOnMouseClicked((event) -> {
-            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_W);
+            PageLoaderShow(signInBck,ConstantVariables.FXML_W);
         });
         transactBar.setOnMouseClicked((event) -> {
-            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_T);
+            PageLoaderShow(signInBck,ConstantVariables.FXML_T);
         });
         chckBalanceBar.setOnMouseClicked((event) -> {
-            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_CB);
+            PageLoaderShow(signInBck,ConstantVariables.FXML_CB);
         });
+    }
+    public void PageLoaderShow(Button button, String fxmlName) {
+        button.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxmlName));
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            System.out.println("cant open\n" + ex);
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
     
 }

@@ -19,13 +19,12 @@ import javafx.stage.Stage;
  * @author User
  */
 public class ConstatnMethods {
-    FXMLLoader loader;
     public ConstatnMethods() {
     }
 
     public void PageLoaderShow(Button button, String fxmlName) {
         button.getScene().getWindow().hide();
-        loader = new FXMLLoader();
+        FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxmlName));
         try {
             loader.load();

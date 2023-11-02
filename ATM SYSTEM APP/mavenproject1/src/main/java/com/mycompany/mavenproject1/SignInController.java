@@ -1,11 +1,15 @@
 package com.mycompany.mavenproject1;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import utilities.*;
 
 public class SignInController {
@@ -64,7 +68,7 @@ public class SignInController {
             frame2.setVisible(true);
         });
         sign_Up.setOnMouseClicked((event) -> {//@sign UP
-            constatnMethods.PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
+            PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
         });
         fingerStartBtn.setOnAction((event) -> {
             fingerStartBtn.setVisible(false);
@@ -87,6 +91,20 @@ public class SignInController {
     }
     private Boolean checkPin(){
         return true;
+    }
+    public void PageLoaderShow(Button button, String fxmlName) {
+        button.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxmlName));
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            System.out.println("cant open\n" + ex);
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
     /*
     

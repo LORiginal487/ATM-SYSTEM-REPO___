@@ -5,15 +5,20 @@
 package com.mycompany.mavenproject1;
 
 import database.DatabaseHandler;
+import java.io.IOException;
 import utilities.ConstantVariables;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import utilities.ConstatnMethods;
 
 public class DepositPageController {
@@ -65,11 +70,11 @@ public class DepositPageController {
     Double inAmnt;
 
     DatabaseHandler databaseHandler;
-    ConstatnMethods constatnMethods;
+    //ConstatnMethods constatnMethods;
 
     @FXML
     void initialize() {
-        constatnMethods = new ConstatnMethods();
+        //constatnMethods = new ConstatnMethods();
         databaseHandler = new DatabaseHandler();
         whileOnFrame1();
         whileOnFrame2();
@@ -94,7 +99,7 @@ public class DepositPageController {
 
     private void whileOnFrame2() {
         noSlip.setOnAction((event) -> {
-            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+            PageLoaderShow(backBtn, ConstantVariables.FXML_H);
         });
         yesSlip.setOnAction((event) -> {
             depositFrame2.setVisible(false);
@@ -117,16 +122,16 @@ public class DepositPageController {
                 + "\n ______________"
                 + "\n THANK YOU");
         signInBck11.setOnAction((event) -> {
-            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+            PageLoaderShow(backBtn, ConstantVariables.FXML_H);
         });
     }
 
     private void OnButtonPress() {
         backBtn.setOnAction((event) -> {
-            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+            PageLoaderShow(backBtn, ConstantVariables.FXML_H);
         });
         signInBck.setOnAction((event) -> {
-            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_SI);
+            PageLoaderShow(backBtn, ConstantVariables.FXML_SI);
         });
     }
 
@@ -167,6 +172,20 @@ public class DepositPageController {
         assert slip != null : "fx:id=\"userAccNumDis11\" was not injected: check your FXML file 'DepositPage.fxml'.";
         assert yesSlip != null : "fx:id=\"yesSlip\" was not injected: check your FXML file 'DepositPage.fxml'.";
 
+    }
+    public void PageLoaderShow(Button button, String fxmlName) {
+        button.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxmlName));
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            System.out.println("cant open\n" + ex);
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 }

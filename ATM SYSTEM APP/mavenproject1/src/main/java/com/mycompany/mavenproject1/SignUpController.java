@@ -54,11 +54,11 @@ public class SignUpController {
 
     @FXML
     private Pane imageFinger;
-    ConstatnMethods constatnMethods;
+    //ConstatnMethods constatnMethods;
 
     @FXML
     void initialize() {
-        constatnMethods = new ConstatnMethods();
+        //constatnMethods = new ConstatnMethods();
         dbHandler = new DatabaseHandler();
         asserts();
         choiceBoxes();
@@ -102,7 +102,7 @@ public class SignUpController {
 
     private void onButtonPress() {//when you press a button
         signInBck.setOnAction((event) -> {
-            constatnMethods.PageLoaderShow(signInBck, ConstantVariables.FXML_SI);
+            PageLoaderShow(signInBck, ConstantVariables.FXML_SI);
 
         });
         signUpbtn.setOnAction((event) -> {
@@ -130,7 +130,7 @@ public class SignUpController {
 //                } catch (ClassNotFoundException ex) {
 //                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
 //                }
-                constatnMethods.PageLoaderShow(signInBck, ConstantVariables.FXML_H);
+                PageLoaderShow(signInBck, ConstantVariables.FXML_H);
 
             }
         });
@@ -200,6 +200,20 @@ public class SignUpController {
     private void generateID() {
         ConstantVariables.SU_ID = ConstantVariables.SU_EMAIL.substring(0, 5) + "487" + ConstantVariables.NUMBER_OF_USERS + 1;
 
+    }
+    public void PageLoaderShow(Button button, String fxmlName) {
+        button.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxmlName));
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            System.out.println("cant open\n" + ex);
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 }
