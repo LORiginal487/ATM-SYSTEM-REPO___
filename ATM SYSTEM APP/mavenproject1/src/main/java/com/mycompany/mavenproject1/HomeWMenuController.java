@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import utilities.ConstantVariables;
+import utilities.ConstatnMethods;
 
 public class HomeWMenuController {
     
@@ -31,10 +32,6 @@ public class HomeWMenuController {
     
     @FXML
     private URL location;
-    Image  image2, image3, image4, image5, image6;
-    @FXML
-    private ImageView cbImg, dImg, wImg, tImg, psImg;
-
     
     @FXML
     private Label TOP_TEXT, TOP_TEXT1, TOP_TEXT2, TOP_TEXT21, TOP_TEXT211, TOP_TEXT2111, TOP_TEXT21111, accntnumDis;
@@ -59,12 +56,15 @@ public class HomeWMenuController {
     
     @FXML
     private AnchorPane transactBar, withdrawBar;
+    ConstatnMethods constatnMethods;
     
     @FXML
     void initialize() {
+        constatnMethods = new ConstatnMethods();
         asserts();
         displayDetails();
         onButtonPress();
+        ToDoSelection();
     }
 
     void asserts() {
@@ -97,18 +97,10 @@ public class HomeWMenuController {
 
     private void onButtonPress() {//when you press a button
         signInBck.setOnAction((event) -> {
-            signInBck.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("signIn.fxml"));
-            try {
-                loader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(HomeWMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_SI);
+        });
+        profileSettingsBtn.setOnAction((event) -> {
+            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_PS);
         });
         
     }
@@ -121,9 +113,21 @@ public class HomeWMenuController {
         accntnumDis.setText(ConstantVariables.SU_ACCNUM);
     }
 
-    private void setImages() {
-        
+    private void ToDoSelection() {
+        depositBar.setOnMouseClicked((event) -> {
+            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_D);
+        });
+        withdrawBar.setOnMouseClicked((event) -> {
+            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_W);
+        });
+        transactBar.setOnMouseClicked((event) -> {
+            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_T);
+        });
+        chckBalanceBar.setOnMouseClicked((event) -> {
+            constatnMethods.PageLoaderShow(signInBck,ConstantVariables.FXML_CB);
+        });
     }
+    
 }
 
 

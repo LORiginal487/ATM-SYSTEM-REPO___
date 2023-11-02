@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import utilities.ConstantVariables;
+import utilities.ConstatnMethods;
 
 public class SignUpController {
 
@@ -31,7 +32,7 @@ public class SignUpController {
     private ChoiceBox<String> gendersCB, monthsCB;
     @FXML
     private ResourceBundle resources;
-    
+
     DatabaseHandler dbHandler;
     @FXML
     private URL location;
@@ -40,22 +41,24 @@ public class SignUpController {
     private AnchorPane cointanerPin;
 
     @FXML
-    private TextField dayIn, emailIn, emailInC, nameIn, phoneNoIn, phoneNoInC, snameIn, yearIn,pinIn;
+    private TextField dayIn, emailIn, emailInC, nameIn, phoneNoIn, phoneNoInC, snameIn, yearIn, pinIn;
 
     @FXML
     private Button fingerStartBtn, signInBck, signUpbtn, submitbtn;
 
     @FXML
-    private Label fingerText, fingerWhenStarted, TOP_TEXT,bottomNotiPin;
+    private Label fingerText, fingerWhenStarted, TOP_TEXT, bottomNotiPin;
 
     @FXML
     private AnchorPane formContainer;
 
     @FXML
     private Pane imageFinger;
+    ConstatnMethods constatnMethods;
 
     @FXML
     void initialize() {
+        constatnMethods = new ConstatnMethods();
         dbHandler = new DatabaseHandler();
         asserts();
         choiceBoxes();
@@ -99,18 +102,8 @@ public class SignUpController {
 
     private void onButtonPress() {//when you press a button
         signInBck.setOnAction((event) -> {
-            signInBck.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("signIn.fxml"));
-            try {
-                loader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(HomeWMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            constatnMethods.PageLoaderShow(signInBck, ConstantVariables.FXML_SI);
+
         });
         signUpbtn.setOnAction((event) -> {
             if (validateForm()) {
@@ -126,50 +119,40 @@ public class SignUpController {
             if (validateSecurity()) {
                 generateID();
                 generateAccNum();
-                ConstantVariables.SU_BALANCE=0.0;
-                try {
-                    dbHandler.signUpDBsaver(ConstantVariables.SU_ID, ConstantVariables.SU_NAME,
-                            ConstantVariables.SU_SURNAME, ConstantVariables.SU_DOB, ConstantVariables.SU_EMAIL,
-                            ConstantVariables.SU_PHONE, ConstantVariables.SU_PIN, ConstantVariables.SU_ACCNUM
-                            , ConstantVariables.SU_BALANCE);
-                } catch (SQLException ex) {
-                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                signUpbtn.getScene().getWindow().hide();
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("HomeW-Menu.fxml"));
-                try {
-                    loader.load();
-                } catch (IOException ex) {
-                    Logger.getLogger(HomeWMenuController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Parent root = loader.getRoot();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
+                ConstantVariables.SU_BALANCE = 0.0;
+//                try {
+//                    dbHandler.signUpDBsaver(ConstantVariables.SU_ID, ConstantVariables.SU_NAME,
+//                            ConstantVariables.SU_SURNAME, ConstantVariables.SU_DOB, ConstantVariables.SU_EMAIL,
+//                            ConstantVariables.SU_PHONE, ConstantVariables.SU_PIN, ConstantVariables.SU_ACCNUM
+//                            , ConstantVariables.SU_BALANCE);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                constatnMethods.PageLoaderShow(signInBck, ConstantVariables.FXML_H);
+
             }
         });
     }
 
     private boolean validateSecurity() {
-        if(pinIn.getText().isEmpty()){
+        if (pinIn.getText().isEmpty()) {
             bottomNotiPin.setText("Please enter missing Values");
-                bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
+            bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
             return false;
-        }else if(pinIn.getText().length()!=5){
+        } else if (pinIn.getText().length() != 5) {
             bottomNotiPin.setText("Please enter a 5 digit value");
-                bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
+            bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
             return false;
-            
-        }else if(!pinIn.getText().matches("\\d+")){
+
+        } else if (!pinIn.getText().matches("\\d+")) {
             bottomNotiPin.setText("Please enter an only digits value");
-                bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
+            bottomNotiPin.setTextFill(Paint.valueOf("#FF0000"));
             return false;
-        }else{
-        ConstantVariables.SU_PIN = Integer.parseInt(pinIn.getText());
-        return true;
+        } else {
+            ConstantVariables.SU_PIN = Integer.parseInt(pinIn.getText());
+            return true;
         }
     }
 
@@ -197,26 +180,27 @@ public class SignUpController {
                 break;
             }
         }
-        if(!emailIn.getText().trim().equals(emailInC.getText().trim())){
+        if (!emailIn.getText().trim().equals(emailInC.getText().trim())) {
             TOP_TEXT.setText("Please confirm email");
-                TOP_TEXT.setTextFill(Paint.valueOf("#FF0000"));
+            TOP_TEXT.setTextFill(Paint.valueOf("#FF0000"));
             validate = false;
-        }else if(!phoneNoIn.getText().trim().equals(phoneNoInC.getText().trim())){
+        } else if (!phoneNoIn.getText().trim().equals(phoneNoInC.getText().trim())) {
             TOP_TEXT.setText("Please confirm phone number");
-                TOP_TEXT.setTextFill(Paint.valueOf("#FF0000"));
+            TOP_TEXT.setTextFill(Paint.valueOf("#FF0000"));
             validate = false;
         }
         return validate;
     }
-    private void generateAccNum(){
+
+    private void generateAccNum() {
         int mid = 1000 + ConstantVariables.NUMBER_OF_USERS;
-        ConstantVariables.SU_ACCNUM = ConstantVariables.ACC_NUM_STARTER + ""+mid+"0";
+        ConstantVariables.SU_ACCNUM = ConstantVariables.ACC_NUM_STARTER + "" + mid + "0";
     }
-    private void generateID(){
-        ConstantVariables.SU_ID= ConstantVariables.SU_EMAIL.substring(0,5)+"487"+ConstantVariables.NUMBER_OF_USERS+1;
-        
+
+    private void generateID() {
+        ConstantVariables.SU_ID = ConstantVariables.SU_EMAIL.substring(0, 5) + "487" + ConstantVariables.NUMBER_OF_USERS + 1;
+
     }
-    
 
 }
 /*

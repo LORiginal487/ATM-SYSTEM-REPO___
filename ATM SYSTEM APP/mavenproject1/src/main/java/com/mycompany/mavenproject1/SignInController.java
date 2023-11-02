@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import utilities.ConstantVariables;
+import utilities.ConstatnMethods;
 
 public class SignInController {
 
@@ -37,9 +39,11 @@ public class SignInController {
 
     @FXML
     private TextField inAccountNumber, inPin;
+    ConstatnMethods constatnMethods;
 
     @FXML
     void initialize() {
+        constatnMethods = new ConstatnMethods();
         asserts();
         onButtonPress();
     }
@@ -70,18 +74,7 @@ public class SignInController {
             frame2.setVisible(true);
         });
         sign_Up.setOnMouseClicked((event) -> {//@sign UP
-            sign_Up.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("signUp.fxml"));
-            try {
-                loader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(HomeWMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            constatnMethods.PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_SU);
         });
         fingerStartBtn.setOnAction((event) -> {
             fingerStartBtn.setVisible(false);
@@ -95,18 +88,7 @@ public class SignInController {
         });
         submitbtn.setOnAction((event) -> {
             if (checkPin()) {
-                submitbtn.getScene().getWindow().hide();
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("HomeW-Menu.fxml"));
-                try {
-                    loader.load();
-                } catch (IOException ex) {
-                    Logger.getLogger(HomeWMenuController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Parent root = loader.getRoot();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
+                constatnMethods.PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
             } else {
                 pinText.setText("Enter valid pin");
             }
