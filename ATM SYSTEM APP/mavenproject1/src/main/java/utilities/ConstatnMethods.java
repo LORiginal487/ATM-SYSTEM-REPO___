@@ -19,22 +19,22 @@ import javafx.stage.Stage;
  * @author User
  */
 public class ConstatnMethods {
-
+    FXMLLoader loader;
     public ConstatnMethods() {
     }
-    
-    public void PageLoaderShow(Button button, String fxmlName){
+
+    public void PageLoaderShow(Button button, String fxmlName) {
         button.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(fxmlName));
-            try {
-                loader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(HomeWMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+        loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxmlName));
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            System.out.println("cant open\n" + ex);
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

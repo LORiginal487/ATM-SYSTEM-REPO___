@@ -57,5 +57,8 @@ public class DatabaseHandler extends ConstantsDB{
     public String getAccntNumDb(){//method for getting available amount
         return "";
     }
+    public String getUserNameDb(){//method for getting available amount
+        return "";
+    }
     
 }

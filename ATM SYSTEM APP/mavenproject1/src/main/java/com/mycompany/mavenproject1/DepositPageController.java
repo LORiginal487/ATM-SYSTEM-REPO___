@@ -5,6 +5,7 @@
 package com.mycompany.mavenproject1;
 
 import database.DatabaseHandler;
+import utilities.ConstantVariables;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import utilities.ConstatnMethods;
 
 public class DepositPageController {
 
@@ -60,66 +62,91 @@ public class DepositPageController {
 
     @FXML
     private Button yesSlip;
-    
+    Double inAmnt;
+
     DatabaseHandler databaseHandler;
+    ConstatnMethods constatnMethods;
 
     @FXML
     void initialize() {
+        constatnMethods = new ConstatnMethods();
         databaseHandler = new DatabaseHandler();
+        whileOnFrame1();
+        whileOnFrame2();
+        whileOnFrame3();
+        OnButtonPress();
         asserts();
     }
-    private void whileOnFrame1(){
+
+    private void whileOnFrame1() {
         userAccNumDis.setText(databaseHandler.getAccntNumDb());
         amntDis1.setText(databaseHandler.getAvailAmntDb().toString());
         depositDoneBtn.setOnAction((event) -> {
-            if(validateAmount()){
-                databaseHandler.depositIntDb(Double.parseDouble(inAmount.getText()));
+            if (validateAmount()) {
+                inAmnt = Double.valueOf(inAmount.getText());
+                databaseHandler.depositIntDb(inAmnt);
                 depositFrame1.setVisible(false);
                 depositFrame2.setVisible(true);
+                
             }
         });
     }
-    private void whileOnFrame2(){
+
+    private void whileOnFrame2() {
         noSlip.setOnAction((event) -> {
-            
+            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+        });
+        yesSlip.setOnAction((event) -> {
+            depositFrame2.setVisible(false);
+            depositFrame3.setVisible(true);
         });
     }
-    private void whileOnFrame3(){
+
+    private void whileOnFrame3() {
         slip.setText("DEPOSIT RECEIPT\n"
                 + "\n ACCOUNT HOLDER"
                 + "\n ______________"
                 + "\n FULL NAMES:"
-                + "\n --------"
+                + "\n -"+databaseHandler.getUserNameDb()
                 + "\n ACCOUNT NUMBER:"
-                + "\n --------"
+                + "\n -"+databaseHandler.getAccntNumDb()
                 + "\n AMOUNT DEPOSITED:"
-                + "\n --------"
+                + "\n -R "+inAmnt
                 + "\n AVAILABE AMOUNT:"
-                + "\n --------"
+                + "\n -R "+databaseHandler.getAvailAmntDb()
                 + "\n ______________"
                 + "\n THANK YOU");
+        signInBck11.setOnAction((event) -> {
+            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+        });
     }
-    private void OnButtonPress(Button button, String fxmlPage){
-        
+
+    private void OnButtonPress() {
+        backBtn.setOnAction((event) -> {
+            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+        });
+        signInBck.setOnAction((event) -> {
+            constatnMethods.PageLoaderShow(backBtn, ConstantVariables.FXML_SI);
+        });
     }
-    private boolean validateAmount(){
+
+    private boolean validateAmount() {
         boolean checker = true;
-        if(inAmount.getText().isEmpty()){
-            checker=false;
-                errorMssgDis.setText("Enter Amount");
+        if (inAmount.getText().isEmpty()) {
+            checker = false;
+            errorMssgDis.setText("Enter Amount");
         }
-        for(int i=0; i < inAmount.getText().length(); i++){
+        for (int i = 0; i < inAmount.getText().length(); i++) {
             char ch = inAmount.getText().charAt(i);
-            if(Character.isLetter(ch) && ch != '.'){
-                checker=false;
+            if (Character.isLetter(ch) && ch != '.') {
+                checker = false;
                 errorMssgDis.setText("InValid Amount");
             }
-            
+
         }
         return checker;
-            
+
     }
-    
 
     void asserts() {
         assert amntDis1 != null : "fx:id=\"amntDis1\" was not injected: check your FXML file 'DepositPage.fxml'.";

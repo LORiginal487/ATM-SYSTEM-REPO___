@@ -20,6 +20,7 @@ public class ConstantVariables {
     public static  Double SU_BALANCE;
     public static String ACC_NUM_STARTER = "48711";
     public static int NUMBER_OF_USERS;
+    //------------------
     public static String FXML_SU="signUp.fxml";
     public static String FXML_SI="signIn.fxml";
     public static String FXML_H="HomeW-Menu.fxml";

@@ -1,22 +1,12 @@
 package com.mycompany.mavenproject1;
 
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import utilities.ConstantVariables;
-import utilities.ConstatnMethods;
+import javafx.fxml.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import utilities.*;
 
 public class SignInController {
 
@@ -74,7 +64,7 @@ public class SignInController {
             frame2.setVisible(true);
         });
         sign_Up.setOnMouseClicked((event) -> {//@sign UP
-            constatnMethods.PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_SU);
+            constatnMethods.PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
         });
         fingerStartBtn.setOnAction((event) -> {
             fingerStartBtn.setVisible(false);

@@ -21,7 +21,7 @@ public class FingerPrintScanner {
 
             Fid fid = reader.CaptureFid(-1, -1, -1, Reader.CaptureProcessing.EMBEDDED);
             if (fid != null) {
-                // Process the captured fingerprint (e.g., save it to a file or send it to a server).
+                // Process the captured fingerprint (e.g., save it)
                 System.out.println("Fingerprint captured.");
             }
             
