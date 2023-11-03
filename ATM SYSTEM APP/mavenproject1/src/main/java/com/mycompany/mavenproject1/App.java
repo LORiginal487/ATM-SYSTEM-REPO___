@@ -18,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(ConstantVariables.FXML_D));
+        Parent root = FXMLLoader.load(getClass().getResource(ConstantVariables.FXML_SI));
         
         Scene scene = new Scene(root);
         

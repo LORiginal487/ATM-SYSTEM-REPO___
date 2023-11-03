@@ -12,11 +12,6 @@
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #274c77;">
          <children>
-            <Label fx:id="headingText" contentDisplay="CENTER" layoutX="201.0" layoutY="9.0" text="DEPOSIT" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="45.0" />
-               </font>
-            </Label>
             <Button fx:id="signInBck" layoutX="527.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: #a3cef1;" text="Log Out" textFill="WHITE" />
             <Button fx:id="backBtn" layoutX="5.0" layoutY="9.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="43.0" style="-fx-background-color: #a3cef100; -fx-border-color: #a3cef1; -fx-background-radius: 100px;" textFill="WHITE">
                <graphic>
@@ -27,6 +22,11 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Label fx:id="headingText1" contentDisplay="CENTER" layoutX="201.0" layoutY="10.0" text="DEPOSIT" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="45.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="depositFrame1" layoutY="70.0" prefHeight="330.0" prefWidth="600.0" style="-fx-background-color: #a3cef1;">

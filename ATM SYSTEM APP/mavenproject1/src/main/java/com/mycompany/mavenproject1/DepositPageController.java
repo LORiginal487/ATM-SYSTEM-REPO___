@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import utilities.ConstatnMethods;
 
@@ -85,7 +86,7 @@ public class DepositPageController {
 
     private void whileOnFrame1() {
         userAccNumDis.setText(databaseHandler.getAccntNumDb());
-        amntDis1.setText(databaseHandler.getAvailAmntDb().toString());
+        amntDis1.setText("R "+databaseHandler.getAvailAmntDb().toString());
         depositDoneBtn.setOnAction((event) -> {
             if (validateAmount()) {
                 inAmnt = Double.valueOf(inAmount.getText());
@@ -140,12 +141,14 @@ public class DepositPageController {
         if (inAmount.getText().isEmpty()) {
             checker = false;
             errorMssgDis.setText("Enter Amount");
+            errorMssgDis.setTextFill(Paint.valueOf("#FF0000"));
         }
         for (int i = 0; i < inAmount.getText().length(); i++) {
             char ch = inAmount.getText().charAt(i);
             if (Character.isLetter(ch) && ch != '.') {
                 checker = false;
                 errorMssgDis.setText("InValid Amount");
+                errorMssgDis.setTextFill(Paint.valueOf("#FF0000"));
             }
 
         }

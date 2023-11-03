@@ -21,12 +21,11 @@ public class DatabaseHandler extends ConstantsDB{
     
     public Connection getDbCon() throws ClassNotFoundException, SQLException {
         String conString = "jdbc:mysql://" +DB_Host+ ":" +DB_Port+ "/" +DB_Name;
-        Log.getLog("1234455", "fg1112233hj", true);
-        Class.forName("com.mysql.jdbc.Driver");
-        Log.getLog("1234455", "fg4444hj", true);
-        dbCon = DriverManager.getConnection(conString, DB_User, DB_Password);
-        Log.getLog("1234455", "fg155555553hj", true);
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        dbCon = DriverManager.getConnection(urlDb, DB_User, DB_Password);
+        
         return dbCon;
+        
     }
     //Inserting data into the database
     public void signUpDBsaver(String id,String name, String surname,String dob, String email, String phone, int pin, String accnum, Double balance) throws SQLException, ClassNotFoundException {
@@ -48,17 +47,41 @@ public class DatabaseHandler extends ConstantsDB{
         statement.setDouble(9, balance);
         statement.executeUpdate();
     }
+    public void getUserDetails(Double ammountIn){//method for adding deposited amount into available amount
+        
+    }
     public void depositIntDb(Double ammountIn){//method for adding deposited amount into available amount
         
     }
     public Double getAvailAmntDb(){//method for getting available amount
         return 0.0;
     }
-    public String getAccntNumDb(){//method for getting available amount
+    public String getAccntNumDb(){//method for getting account number
         return "";
     }
-    public String getUserNameDb(){//method for getting available amount
+    public String getUserNameDb(){//method for getting user name
         return "";
+    }
+    public void withdrawFromDb(Double ammountIn){//method for subtracting withdrawn amount from available amount
+        
+    }
+    public boolean look4accnInDb(String accntIn){//method for subtracting withdrawn amount from available amount
+        return true;
+    }
+    public void transferDb(Double ammountIn, String accntIn){//method for getting user name
+        
+    }
+    public void changeNameDb(String name){//method for getting user name
+        
+    }
+    public void changeSurnameDb(String Surname){//method for getting user name
+        
+    }
+    public void changeEmailDb(String Email){//method for getting user name
+        
+    }
+    public void changePhoneDb(String Phone){//method for getting user name
+        
     }
     
 }

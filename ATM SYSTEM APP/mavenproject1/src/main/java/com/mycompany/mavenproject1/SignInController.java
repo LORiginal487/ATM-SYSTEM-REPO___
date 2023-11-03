@@ -1,9 +1,13 @@
 package com.mycompany.mavenproject1;
 
 
+import database.DatabaseHandler;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,9 +38,11 @@ public class SignInController {
     @FXML
     private TextField inAccountNumber, inPin;
     ConstatnMethods constatnMethods;
+    DatabaseHandler dbH;
 
     @FXML
     void initialize() {
+        dbH = new DatabaseHandler();
         constatnMethods = new ConstatnMethods();
         asserts();
         onButtonPress();
@@ -67,8 +73,15 @@ public class SignInController {
 
             frame2.setVisible(true);
         });
-        sign_Up.setOnMouseClicked((event) -> {//@sign UP
-            PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
+        sign_Up.setOnMouseClicked((event) -> {try {
+            //@sign UP
+            dbH.signUpDBsaver("12345", "name", "surname", "dob", "email", "phone", 0, "accnum", 0.0);
+            //PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
+            } catch (SQLException ex) {
+                Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         fingerStartBtn.setOnAction((event) -> {
             fingerStartBtn.setVisible(false);
