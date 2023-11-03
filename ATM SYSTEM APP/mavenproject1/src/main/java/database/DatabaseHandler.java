@@ -5,7 +5,9 @@
 package database;
 
 import java.sql.*;
-import sun.rmi.runtime.Log;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,10 +22,15 @@ public class DatabaseHandler extends ConstantsDB{
     
     
     public Connection getDbCon() throws ClassNotFoundException, SQLException {
-        String conString = "jdbc:mysql://" +DB_Host+ ":" +DB_Port+ "/" +DB_Name;
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        dbCon = DriverManager.getConnection(urlDb, DB_User, DB_Password);
+        String urlDb= "jdbc:mysql://127.0.0.1:3306/atm_schema";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Connection dbCon = DriverManager.getConnection(urlDb, "userATM", "UserATM@3306");
         
+        System.out.println("conneted");
         return dbCon;
         
     }
