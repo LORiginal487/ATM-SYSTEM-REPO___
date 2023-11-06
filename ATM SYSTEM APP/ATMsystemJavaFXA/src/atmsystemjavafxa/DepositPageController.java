@@ -8,7 +8,10 @@ import database.DatabaseHandler;
 import java.io.IOException;
 import utilities.ConstantVariables;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -74,7 +77,7 @@ public class DepositPageController {
     //ConstatnMethods constatnMethods;
 
     @FXML
-    void initialize() {
+    void initialize() throws ClassNotFoundException {
         //constatnMethods = new ConstatnMethods();
         databaseHandler = new DatabaseHandler();
         whileOnFrame1();
@@ -84,16 +87,22 @@ public class DepositPageController {
         asserts();
     }
 
-    private void whileOnFrame1() {
-        userAccNumDis.setText(databaseHandler.getAccntNumDb());
-        amntDis1.setText("R "+databaseHandler.getAvailAmntDb().toString());
+    private void whileOnFrame1() throws ClassNotFoundException {
+        userAccNumDis.setText(ConstantVariables.SU_ACCNUM);
+        amntDis1.setText("R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
         depositDoneBtn.setOnAction((event) -> {
             if (validateAmount()) {
-                inAmnt = Double.valueOf(inAmount.getText());
-                databaseHandler.depositIntDb(inAmnt);
-                depositFrame1.setVisible(false);
-                depositFrame2.setVisible(true);
                 
+                try {
+                    databaseHandler.depositIntDb(inAmnt);
+                    depositFrame1.setVisible(false);
+                    depositFrame2.setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(DepositPageController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DepositPageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
         });
     }
@@ -108,18 +117,18 @@ public class DepositPageController {
         });
     }
 
-    private void whileOnFrame3() {
+    private void whileOnFrame3() throws ClassNotFoundException {
         slip.setText("DEPOSIT RECEIPT\n"
                 + "\n ACCOUNT HOLDER"
                 + "\n ______________"
                 + "\n FULL NAMES:"
-                + "\n -"+databaseHandler.getUserNameDb()
+                + "\n -" + ConstantVariables.SU_NAME+" "+ ConstantVariables.SU_SURNAME
                 + "\n ACCOUNT NUMBER:"
-                + "\n -"+databaseHandler.getAccntNumDb()
+                + "\n -" + ConstantVariables.SU_ACCNUM
                 + "\n AMOUNT DEPOSITED:"
-                + "\n -R "+inAmnt
+                + "\n -R " + inAmnt
                 + "\n AVAILABE AMOUNT:"
-                + "\n -R "+databaseHandler.getAvailAmntDb()
+                + "\n -R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)
                 + "\n ______________"
                 + "\n THANK YOU");
         signInBck11.setOnAction((event) -> {
@@ -142,6 +151,8 @@ public class DepositPageController {
             checker = false;
             errorMssgDis.setText("Enter Amount");
             errorMssgDis.setTextFill(Paint.valueOf("#FF0000"));
+        }else{
+            inAmnt = Double.valueOf(inAmount.getText());
         }
         for (int i = 0; i < inAmount.getText().length(); i++) {
             char ch = inAmount.getText().charAt(i);
@@ -176,6 +187,7 @@ public class DepositPageController {
         assert yesSlip != null : "fx:id=\"yesSlip\" was not injected: check your FXML file 'DepositPage.fxml'.";
 
     }
+
     public void PageLoaderShow(Button button, String fxmlName) {
         button.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();

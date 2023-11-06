@@ -41,14 +41,14 @@ public class SignInController {
     @FXML
     private TextField inAccountNumber;
     @FXML
-    private PasswordField inPinH;
+    private TextField inPinH;
 
     DatabaseHandler dbH;
     String nummmm;
 
     @FXML
     void initialize() {
-        inPinH = new PasswordField();
+        
         dbH = new DatabaseHandler();
         asserts();
         onButtonPress();

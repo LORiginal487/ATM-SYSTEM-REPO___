@@ -7,7 +7,10 @@ package atmsystemjavafxa;
 import database.DatabaseHandler;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,7 +65,7 @@ public class WithdrawPageController {
     Double inAmnt;
 
     @FXML
-    void initialize() {
+    void initialize() throws ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
         whileOnFrame1();
         whileOnFrame2();
@@ -70,15 +73,22 @@ public class WithdrawPageController {
         OnButtonPress();
         asserts();
     }
-    private void whileOnFrame1() {
+    private void whileOnFrame1() throws ClassNotFoundException {
         userAccNumDis.setText(databaseHandler.getAccntNumDb());
-        amntDis1.setText("R "+databaseHandler.getAvailAmntDb().toString());
+        amntDis1.setText("R "+databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
         wDoneBtn.setOnAction((event) -> {
             if (validateAmount()) {
                 inAmnt = Double.valueOf(inAmount.getText());
-                databaseHandler.depositIntDb(inAmnt);
-                depositFrame1.setVisible(false);
+                try {
+                    databaseHandler.withdrawFromDb(inAmnt);
+                    depositFrame1.setVisible(false);
                 depositFrame2.setVisible(true);
+                
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(WithdrawPageController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(WithdrawPageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });
@@ -94,18 +104,18 @@ public class WithdrawPageController {
         });
     }
 
-    private void whileOnFrame3() {
+    private void whileOnFrame3() throws ClassNotFoundException {
         slip.setText("WITHDRAWAL RECEIPT\n"
                 + "\n ACCOUNT HOLDER"
                 + "\n ______________"
                 + "\n FULL NAMES:"
-                + "\n -"+databaseHandler.getUserNameDb()
+                + "\n -" + ConstantVariables.SU_NAME+" "+ ConstantVariables.SU_SURNAME
                 + "\n ACCOUNT NUMBER:"
-                + "\n -"+databaseHandler.getAccntNumDb()
+                + "\n -" + ConstantVariables.SU_ACCNUM
                 + "\n AMOUNT WITHDRAWN:"
                 + "\n -R "+inAmnt
                 + "\n AVAILABE AMOUNT:"
-                + "\n -R "+databaseHandler.getAvailAmntDb()
+                + "\n -R "+databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)
                 + "\n ______________"
                 + "\n THANK YOU");
         menu.setOnAction((event) -> {

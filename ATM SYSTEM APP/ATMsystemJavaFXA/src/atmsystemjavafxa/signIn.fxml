@@ -53,10 +53,10 @@
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="inPinH" alignment="CENTER" layoutX="216.0" layoutY="120.0" prefHeight="52.0" prefWidth="169.0" promptText="12345" style="-fx-border-color: #274C77;">
+                  <TextField fx:id="inPinH" alignment="CENTER" layoutX="216.0" layoutY="120.0" prefHeight="52.0" prefWidth="169.0" promptText="12345" style="-fx-border-color: #274C77;">
                      <font>
                         <Font size="24.0" />
-                     </font></PasswordField>
+                     </font></TextField>
                   <Button fx:id="submitbtn" layoutX="233.0" layoutY="182.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="135.0" style="-fx-background-color: #a3cef1;" text="submit" textFill="WHITE" />
                </children>
             </AnchorPane>

@@ -53,15 +53,15 @@ public class CheckBalancePageController {
         DatabaseHandler databaseHandler;
 
     @FXML
-    void initialize() {
-
+    void initialize() throws ClassNotFoundException {
+        OnButtonPress();
         databaseHandler = new DatabaseHandler();
         displayDetails();
         asserts();
 
     }
-    private void displayDetails() {
-        amntDis1.setText("R "+databaseHandler.getAvailAmntDb().toString());
+    private void displayDetails() throws ClassNotFoundException {
+        amntDis1.setText("R "+databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
         userAccNumDis.setText(databaseHandler.getAccntNumDb());
     }
 

@@ -28,7 +28,7 @@ public class ConstantsDB {
     //TABLE INFO
     public final String DB_TB_Name = "atm_users";//table name
     //columns
-    public final String TB_C_id = "id";
+    //public final String TB_C_id = "id";
     public final String TB_C_Name = "name";
     public final String TB_C_Surname = "surname";
     public final String TB_C_DOB = "dob";

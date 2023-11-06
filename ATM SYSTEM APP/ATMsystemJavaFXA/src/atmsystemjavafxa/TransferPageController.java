@@ -7,7 +7,10 @@ package atmsystemjavafxa;
 import database.DatabaseHandler;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -90,7 +93,7 @@ public class TransferPageController {
     String accountReceiver;
 
     @FXML
-    void initialize() {
+    void initialize() throws ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
         whileOnFrame1();
         whileOnFrame2();
@@ -99,16 +102,25 @@ public class TransferPageController {
         asserts();
     }
 
-    private void whileOnFrame1() {
-        userAccNumDis.setText(databaseHandler.getAccntNumDb());
-        amntDis1.setText("R " + databaseHandler.getAvailAmntDb().toString());
+    private void whileOnFrame1() throws ClassNotFoundException {
+        userAccNumDis.setText(ConstantVariables.SU_ACCNUM);
+        amntDis1.setText("R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
         tDoneBtn.setOnAction((event) -> {
-            if (validateAmount()) {
-                accountReceiver = inACCNT.getText();
-                databaseHandler.transferDb(inAmnt, accountReceiver);
-                depositFrame1.setVisible(false);
-                depositFrame2.setVisible(true);
-
+            try {
+                if (validateAmount()) {
+                    accountReceiver = inACCNT.getText();
+                    try {
+                        databaseHandler.transferDb(inAmnt, accountReceiver);
+                        depositFrame1.setVisible(false);
+                        depositFrame2.setVisible(true);
+                    } catch (ClassNotFoundException | SQLException ex) {
+                        Logger.getLogger(TransferPageController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TransferPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -123,18 +135,18 @@ public class TransferPageController {
         });
     }
 
-    private void whileOnFrame3() {
+    private void whileOnFrame3() throws ClassNotFoundException {
         slip.setText(slip.getText()+"\n"
                 + "\n ACCOUNT HOLDER"
                 + "\n ______________"
                 + "\n FULL NAMES:"
-                + "\n -" + databaseHandler.getUserNameDb()
-                + "\n FROM ACCOUNT NUMBER:"
-                + "\n -" + databaseHandler.getAccntNumDb()
+                + "\n -" + ConstantVariables.SU_NAME+" "+ ConstantVariables.SU_SURNAME
+                + "\n ACCOUNT NUMBER:"
+                + "\n -" + ConstantVariables.SU_ACCNUM
                 + "\n AMOUNT TRANSFERED:"
                 + "\n -R " + inAmnt
                 + "\n AVAILABE AMOUNT:"
-                + "\n -R " + databaseHandler.getAvailAmntDb()
+                + "\n -R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)
                 + "\n TO ACCOUNT NUMBER:"
                 + "\n -" + inACCNT
                 + "\n ______________"
@@ -177,7 +189,7 @@ public class TransferPageController {
         return checker;
     }
 
-    private boolean validateAmount() {
+    private boolean validateAmount() throws ClassNotFoundException {
 
         if (validateToAccountNum()) {
             boolean checker = true;
@@ -196,7 +208,7 @@ public class TransferPageController {
 
             }
             inAmnt = Double.valueOf(inAMNT.getText());
-            if (inAmnt > databaseHandler.getAvailAmntDb()) {
+            if (inAmnt > databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)) {
                 checker = false;
 
                 errorMssgDis.setText("Insufficient funds, You broke");
