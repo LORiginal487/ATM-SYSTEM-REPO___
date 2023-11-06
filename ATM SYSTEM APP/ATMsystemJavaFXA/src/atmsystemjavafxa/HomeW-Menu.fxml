@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.HomeWMenuController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0">
+         <children>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #274c77;">
+               <children>
+                  <Label fx:id="headingText" contentDisplay="CENTER" layoutX="177.0" layoutY="9.0" text="WELCOME!" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="45.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="signInBck" layoutX="18.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: #a3cef1;" text="Log Out" textFill="WHITE" />
+                  <Button fx:id="profileSettingsBtn" layoutX="532.0" layoutY="9.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="43.0" style="-fx-background-color: #a3cef1;" textFill="WHITE">
+                     <graphic>
+                        <ImageView fx:id="psImg" fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@settingsP.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="formContainer" layoutY="70.0" prefHeight="330.0" prefWidth="600.0">
+               <children>
+                  <Label fx:id="TOP_TEXT" alignment="CENTER" layoutY="14.0" prefWidth="300.0" text="ACCOUNT HOLDER" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="TOP_TEXT1" alignment="CENTER" layoutX="300.0" layoutY="14.0" prefWidth="300.0" text="TO DO" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="TOP_TEXT2" layoutX="14.0" layoutY="72.0" text="Name:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="TOP_TEXT21" layoutX="14.0" layoutY="112.0" text="Surname:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="TOP_TEXT211" layoutX="14.0" layoutY="153.0" text="Email:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="TOP_TEXT2111" layoutX="14.0" layoutY="194.0" text="Phone No.:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="TOP_TEXT21111" layoutX="14.0" layoutY="235.0" text="Account No.:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameDis" layoutX="120.0" layoutY="72.0" prefWidth="155.0" text="Name:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="surnameDis" layoutX="120.0" layoutY="112.0" prefWidth="155.0" text="Name:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="emailDis" layoutX="120.0" layoutY="153.0" prefWidth="155.0" text="Name:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="phoneDis" layoutX="120.0" layoutY="194.0" prefWidth="155.0" text="Name:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="accntnumDis" layoutX="120.0" layoutY="235.0" prefWidth="155.0" text="Name:" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane fx:id="depositBar" layoutX="279.0" layoutY="57.0" prefHeight="107.0" prefWidth="120.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <ImageView fx:id="dImg" fitHeight="85.0" fitWidth="104.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="nameDis1" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="120.0" text="DEPOSIT" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="withdrawBar" layoutX="408.0" layoutY="57.0" prefHeight="107.0" prefWidth="165.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <ImageView fx:id="wImg" fitHeight="64.0" fitWidth="125.0" layoutX="51.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@withdraw.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="nameDis11" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="165.0" text="WITHDRAW" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="transactBar" layoutX="281.0" layoutY="173.0" prefHeight="107.0" prefWidth="120.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <ImageView fx:id="tImg" fitHeight="78.0" fitWidth="79.0" layoutX="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@tranansfer.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="nameDis12" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="120.0" text="TRANSACT" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="chckBalanceBar" layoutX="408.0" layoutY="173.0" prefHeight="107.0" prefWidth="165.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <ImageView fx:id="cbImg" fitHeight="85.0" fitWidth="110.0" layoutX="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@check_balance.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="nameDis13" alignment="CENTER" layoutY="83.0" prefHeight="21.0" prefWidth="165.0" text="CHECK BALANCE" textAlignment="CENTER" textFill="#6096ba" underline="true">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
