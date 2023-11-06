@@ -2,12 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.SignInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atmsystemjavafxa.SignInController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #274c77;">
          <children>
@@ -30,10 +31,15 @@
                   <Font name="Arial" size="24.0" />
                </font>
             </TextField>
-            <Button fx:id="sign_In_Btn" layoutX="141.0" layoutY="115.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="318.0" style="-fx-background-color: #6096BA;" text="Sign In" textFill="WHITE" />
+            <Button fx:id="sign_In_Btn" layoutX="141.0" layoutY="115.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="318.0" style="-fx-background-color: #6096BA;" text="PROCEED" textFill="WHITE" />
             <Label fx:id="sign_Up" alignment="CENTER" layoutX="214.0" layoutY="186.0" text="Don't have an account? Sign Up" textAlignment="CENTER" textFill="#8b8c89" underline="true">
                <font>
                   <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="ERROR" alignment="CENTER" layoutX="-4.0" layoutY="209.0" prefHeight="45.0" prefWidth="600.0" textFill="RED">
+               <font>
+                  <Font size="18.0" />
                </font>
             </Label>
          </children>
@@ -47,11 +53,10 @@
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="inPin" alignment="CENTER" layoutX="216.0" layoutY="120.0" prefHeight="52.0" prefWidth="169.0" promptText="12345" style="-fx-border-color: #274C77;">
+                  <PasswordField fx:id="inPinH" alignment="CENTER" layoutX="216.0" layoutY="120.0" prefHeight="52.0" prefWidth="169.0" promptText="12345" style="-fx-border-color: #274C77;">
                      <font>
                         <Font size="24.0" />
-                     </font>
-                  </TextField>
+                     </font></PasswordField>
                   <Button fx:id="submitbtn" layoutX="233.0" layoutY="182.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="135.0" style="-fx-background-color: #a3cef1;" text="submit" textFill="WHITE" />
                </children>
             </AnchorPane>

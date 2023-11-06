@@ -117,9 +117,21 @@ public class SignUpController {
         });
         submitbtn.setOnAction((event) -> {
             if (validateSecurity()) {
-                generateID();
+                
                 generateAccNum();
                 ConstantVariables.SU_BALANCE = 0.0;
+                try {
+                    dbHandler.signUpDBsaver( ConstantVariables.SU_NAME
+                            , ConstantVariables.SU_SURNAME, ConstantVariables.SU_DOB
+                            , ConstantVariables.SU_EMAIL, ConstantVariables.SU_PHONE
+                            , ConstantVariables.SU_PIN, ConstantVariables.SU_ACCNUM
+                            , ConstantVariables.SU_BALANCE);
+                    PageLoaderShow(signInBck, ConstantVariables.FXML_H);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 //                try {
 //                    dbHandler.signUpDBsaver(ConstantVariables.SU_ID, ConstantVariables.SU_NAME,
 //                            ConstantVariables.SU_SURNAME, ConstantVariables.SU_DOB, ConstantVariables.SU_EMAIL,
@@ -130,7 +142,7 @@ public class SignUpController {
 //                } catch (ClassNotFoundException ex) {
 //                    Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
 //                }
-                PageLoaderShow(signInBck, ConstantVariables.FXML_H);
+                
 
             }
         });
@@ -197,10 +209,7 @@ public class SignUpController {
         ConstantVariables.SU_ACCNUM = ConstantVariables.ACC_NUM_STARTER + "" + mid + "0";
     }
 
-    private void generateID() {
-        ConstantVariables.SU_ID = ConstantVariables.SU_EMAIL.substring(0, 5) + "487" + ConstantVariables.NUMBER_OF_USERS + 1;
-
-    }
+    
     public void PageLoaderShow(Button button, String fxmlName) {
         button.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();

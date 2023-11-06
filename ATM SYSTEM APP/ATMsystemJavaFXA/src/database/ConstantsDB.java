@@ -30,7 +30,7 @@ public class ConstantsDB {
     //columns
     public final String TB_C_id = "id";
     public final String TB_C_Name = "name";
-    public final String TB_C_Surname = "Surname";
+    public final String TB_C_Surname = "surname";
     public final String TB_C_DOB = "dob";
     public final String TB_C_Email = "email";
     public final String TB_C_Phone = "phone";

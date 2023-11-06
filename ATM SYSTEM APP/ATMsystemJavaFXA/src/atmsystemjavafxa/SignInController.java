@@ -1,5 +1,8 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package atmsystemjavafxa;
-
 
 import database.DatabaseHandler;
 import java.io.IOException;
@@ -30,25 +33,31 @@ public class SignInController {
     private Button fingerStartBtn, sign_In_Btn, submitbtn, usePinBtn;
 
     @FXML
-    private Label fingerText, fingerWhenStarted, sign_Up, pinText;
+    private Label fingerText, fingerWhenStarted, sign_Up, pinText, errorTag;
 
     @FXML
     private Pane imageFinger;
 
     @FXML
-    private TextField inAccountNumber, inPin;
-    ConstatnMethods constatnMethods;
+    private TextField inAccountNumber;
+    @FXML
+    private PasswordField inPinH;
+
     DatabaseHandler dbH;
+    String nummmm;
 
     @FXML
     void initialize() {
+        inPinH = new PasswordField();
         dbH = new DatabaseHandler();
-        constatnMethods = new ConstatnMethods();
         asserts();
         onButtonPress();
     }
 
     void asserts() {
+        assert errorTag != null : "fx:id=\"ERROR\" was not injected: check your FXML file 'signIn.fxml'.";
+        assert inPinH != null : "fx:id=\"inPinH\" was not injected: check your FXML file 'signIn.fxml'.";
+
         assert fingerStartBtn != null : "fx:id=\"fingerStartBtn\" was not injected: check your FXML file 'signIn.fxml'.";
         assert fingerText != null : "fx:id=\"fingerText\" was not injected: check your FXML file 'signIn.fxml'.";
         assert fingerWhenStarted != null : "fx:id=\"fingerWhenStarted\" was not injected: check your FXML file 'signIn.fxml'.";
@@ -62,26 +71,21 @@ public class SignInController {
         assert usePinBtn != null : "fx:id=\"usePinBtn\" was not injected: check your FXML file 'signIn.fxml'.";
         assert fingerFrame != null : "fx:id=\"fingerFrame\" was not injected: check your FXML file 'signIn.fxml'.";
         assert pinFrame != null : "fx:id=\"pinFrame\" was not injected: check your FXML file 'signIn.fxml'.";
-        assert inPin != null : "fx:id=\"inPin\" was not injected: check your FXML file 'signIn.fxml'.";
+        assert inPinH != null : "fx:id=\"inPin\" was not injected: check your FXML file 'signIn.fxml'.";
         assert fingerText != null : "fx:id=\"fingerText\" was not injected: check your FXML file 'signIn.fxml'.";
 
     }
 
     private void onButtonPress() {//when you press a button
         sign_In_Btn.setOnAction((event) -> {//@sign in button
+            ConstantVariables.SU_ACCNUM = inAccountNumber.getText();
             frame1.setVisible(false);
 
             frame2.setVisible(true);
         });
-        sign_Up.setOnMouseClicked((event) -> {try {
+        sign_Up.setOnMouseClicked((event) -> {
             //@sign UP
-            dbH.signUpDBsaver("12345", "name", "surname", "dob", "email", "phone", 0, "accnum", 0.0);
-            //PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
-            } catch (SQLException ex) {
-                Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            PageLoaderShow(sign_In_Btn, ConstantVariables.FXML_SU);
         });
         fingerStartBtn.setOnAction((event) -> {
             fingerStartBtn.setVisible(false);
@@ -94,17 +98,32 @@ public class SignInController {
             pinFrame.setVisible(true);
         });
         submitbtn.setOnAction((event) -> {
-            if (checkPin()) {
-                constatnMethods.PageLoaderShow(sign_In_Btn,ConstantVariables.FXML_H);
-            } else {
-                pinText.setText("Enter valid pin");
+             nummmm = inPinH.getText();
+            int INPIN = Integer.parseInt(nummmm);
+            try {
+                String validation = dbH.validateSignIn(ConstantVariables.SU_ACCNUM, INPIN, pinText);
+
+                if ("valid".equals(validation)) {
+                    PageLoaderShow(sign_In_Btn, ConstantVariables.FXML_H);
+
+                } else if ("xEmail".equals(validation)) {
+                    PageLoaderShow(sign_In_Btn, ConstantVariables.FXML_SI);
+
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        inPinH.setOnKeyPressed(event -> {
+            if (event.getCode().getName().equals("Enter")) {
+                // User pressed Enter, process the entered PIN
+                nummmm = inPinH.getText();
+                
             }
         });
 
     }
-    private Boolean checkPin(){
-        return true;
-    }
+
     public void PageLoaderShow(Button button, String fxmlName) {
         button.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
@@ -119,8 +138,8 @@ public class SignInController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
     /*
     
      */
-
 }

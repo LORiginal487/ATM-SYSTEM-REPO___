@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.Logger;
+import javafx.scene.control.Label;
 
 /**
  *
@@ -22,37 +23,58 @@ public class DatabaseHandler extends ConstantsDB{
     
     
     public Connection getDbCon() throws ClassNotFoundException, SQLException {
-        String urlDb= "jdbc:mysql://127.0.0.1:3306/atm_schema";
+        String urlDb= "jdbc:mysql://"+DB_Host+":"+DB_Port+"/"+DB_Name;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Connection dbCon = DriverManager.getConnection(urlDb, "userATM", "UserATM@3306");
+         dbCon = DriverManager.getConnection(urlDb, DB_User, DB_Password);
         
         System.out.println("conneted");
         return dbCon;
         
     }
     //Inserting data into the database
-    public void signUpDBsaver(String id,String name, String surname,String dob, String email, String phone, int pin, String accnum, Double balance) throws SQLException, ClassNotFoundException {
-        String insertQuery = "INSERT INTO "+DB_TB_Name+"("+TB_C_id+", "+TB_C_Name+", "+TB_C_Surname+
+    public void signUpDBsaver(String name, String surname,String dob, String email, String phone, int pin, String accnum, Double balance) throws SQLException, ClassNotFoundException {
+        String insertQuery = "INSERT INTO "+DB_TB_Name+"("+TB_C_Name+", "+TB_C_Surname+
                 ", "+TB_C_DOB+", "+TB_C_Email+", "+TB_C_Phone+", "+TB_C_Pin+", "+TB_C_Accnum+", "+TB_C_Balance+")" +
-                "VALUES(?,?,?,?,?,?,?,?,?)";
+                "VALUES(?,?,?,?,?,?,?,?)";
         //String insertQuery = "INSERT INTO `atm_schema`.`atm_users` (`id`, `name`, `surname`, `dob`, `email`, `phone`, `pin`, `account_num`, `balance`) VALUES ('23456', 'lkk', 'yui', '02/03/2005', 'lkjhgjk@gmail.com', '01789654231', '12345', '01010101', '500246.35')";
 
         statement = (PreparedStatement) getDbCon().prepareStatement(insertQuery);
 
-        statement.setString(1, id);
-        statement.setString(2, name);
-        statement.setString(3, surname);
-        statement.setString(4, dob);
-        statement.setString(5, email);
-        statement.setString(6, phone);
-        statement.setInt(7, pin);
-        statement.setString(8, accnum);
-        statement.setDouble(9, balance);
+        
+        statement.setString(1, name);
+        statement.setString(2, surname);
+        statement.setString(3, dob);
+        statement.setString(4, email);
+        statement.setString(5, phone);
+        statement.setInt(6, pin);
+        statement.setString(7, accnum);
+        statement.setDouble(8, balance);
         statement.executeUpdate();
+    }
+    public String validateSignIn(String accNUM, int pin, Label error) throws ClassNotFoundException, SQLException{
+        String Query = "SELECT "+TB_C_Pin+" FROM "+DB_TB_Name+" WHERE "+TB_C_Accnum+" = "+accNUM;
+       
+            statement = (PreparedStatement) getDbCon().prepareStatement(Query);
+            ResultSet rs = statement.executeQuery(Query);
+            if(rs.next() != false){
+            int result = rs.getInt(TB_C_Pin);
+            if(pin == result){
+                return "valid";
+            }else{
+                error.setText("INVALID pin");
+                return "xPin";
+            }
+            }else{
+                error.setText("INVALID email");
+            return "xEmail";
+            }
+        
+        
+        
     }
     public void getUserDetails(Double ammountIn){//method for adding deposited amount into available amount
         

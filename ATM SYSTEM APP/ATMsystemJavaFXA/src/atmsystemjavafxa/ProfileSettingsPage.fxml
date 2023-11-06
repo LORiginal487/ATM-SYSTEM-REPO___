@@ -8,14 +8,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.mycompany.Controllers.ProfileSettingsPageController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atmsystemjavafxa.ProfileSettingsPageController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0">
          <children>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #274c77;">
                <children>
-                  <Label fx:id="headingText" contentDisplay="CENTER" layoutX="195.0" layoutY="10.0" text="BALANCE" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="headingText" contentDisplay="CENTER" layoutX="195.0" layoutY="10.0" text="PROFILE " textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="45.0" />
                      </font>
