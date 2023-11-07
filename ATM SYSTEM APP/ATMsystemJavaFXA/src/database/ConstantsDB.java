@@ -15,13 +15,10 @@ public class ConstantsDB {
     public final String DB_Host = "127.0.0.1";
     public final String DB_Port = "3306";
     public final String DB_Name = "atm_schema";
-    //public final String DB_User = "root";
-    //public final String DB_Password = "Livhuravs_487";
+    
     public final String urlDb= "jdbc:mysql://127.0.0.1:3306/atm_schema";
     
-//    public final String DB_Host = "localhost";
-//    public final String DB_Port = "3306";
-//    public final String DB_Name = "atm_schema";
+
     public final String DB_User = "userATM";
    public final String DB_Password = "UserATM@3306";
     
