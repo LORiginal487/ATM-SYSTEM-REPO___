@@ -136,8 +136,8 @@ public class DatabaseHandler extends ConstantsDB {
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     System.out.println("123234354654765768");
-                        return true;
-                    
+                    return true;
+
                 } else {
                     return false;
                 }
@@ -239,4 +239,41 @@ public class DatabaseHandler extends ConstantsDB {
 
     }
 
+    public void generateAccNum() {
+        boolean chk = true;
+        String tmp = null;
+        while (chk) {
+            int mid = 1000 + countUsers() + 1;
+             tmp = ConstantVariables.ACC_NUM_STARTER + "" + mid + "0";
+            String query = "SELECT " + TB_C_Name + " FROM " + DB_TB_Name + " WHERE " + TB_C_Accnum + " = ?";
+            try (PreparedStatement preparedStatement = getDbCon().prepareStatement(query)) {
+                preparedStatement.setString(1, tmp);
+
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    if (rs.next()) {
+                        chk = true;
+                    } else {
+                        chk = false;
+                    }
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                chk = false;
+            }
+        }
+        ConstantVariables.SU_ACCNUM=tmp;
+    }
+
+    private int countUsers() {
+        String query = "SELECT COUNT(*) FROM " + DB_TB_Name;
+        try (PreparedStatement preparedStatement = getDbCon().prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            return 0;
+        }
+    }
 }

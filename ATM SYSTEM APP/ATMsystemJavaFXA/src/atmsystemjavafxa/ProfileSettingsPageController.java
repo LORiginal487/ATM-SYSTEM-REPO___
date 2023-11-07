@@ -125,6 +125,7 @@ public class ProfileSettingsPageController {
 
     }
     private void disPlayAndClick(){
+        userAccNumDis.setText(ConstantVariables.SU_ACCNUM);
         nameDis.setText(ConstantVariables.SU_NAME);
         onEditClick(nameDis, inNAME);
         surnameDis.setText(ConstantVariables.SU_SURNAME);

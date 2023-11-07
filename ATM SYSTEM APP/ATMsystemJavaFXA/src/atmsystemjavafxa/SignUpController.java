@@ -118,7 +118,7 @@ public class SignUpController {
         submitbtn.setOnAction((event) -> {
             if (validateSecurity()) {
                 
-                generateAccNum();
+                dbHandler.generateAccNum();
                 ConstantVariables.SU_BALANCE = 0.0;
                 try {
                     dbHandler.signUpDBsaver( ConstantVariables.SU_NAME
@@ -204,10 +204,7 @@ public class SignUpController {
         return validate;
     }
 
-    private void generateAccNum() {
-        int mid = 1000 + ConstantVariables.NUMBER_OF_USERS;
-        ConstantVariables.SU_ACCNUM = ConstantVariables.ACC_NUM_STARTER + "" + mid + "0";
-    }
+    
 
     
     public void PageLoaderShow(Button button, String fxmlName) {
