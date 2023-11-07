@@ -72,6 +72,7 @@ public class DepositPageController {
     @FXML
     private Button yesSlip;
     Double inAmnt;
+    String amount;
 
     DatabaseHandler databaseHandler;
     //ConstatnMethods constatnMethods;
@@ -81,22 +82,23 @@ public class DepositPageController {
         //constatnMethods = new ConstatnMethods();
         databaseHandler = new DatabaseHandler();
         whileOnFrame1();
-        whileOnFrame2();
-        whileOnFrame3();
+        
+        
         OnButtonPress();
         asserts();
     }
 
     private void whileOnFrame1() throws ClassNotFoundException {
         userAccNumDis.setText(ConstantVariables.SU_ACCNUM);
-        amntDis1.setText("R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
+        amntDis1.setText("R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM));
         depositDoneBtn.setOnAction((event) -> {
             if (validateAmount()) {
-                
+
                 try {
-                    databaseHandler.depositIntDb(inAmnt);
+                    databaseHandler.depositIntDb(ConstantVariables.D_amount_In);
                     depositFrame1.setVisible(false);
                     depositFrame2.setVisible(true);
+                    whileOnFrame2();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(DepositPageController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
@@ -114,6 +116,11 @@ public class DepositPageController {
         yesSlip.setOnAction((event) -> {
             depositFrame2.setVisible(false);
             depositFrame3.setVisible(true);
+            try {
+                whileOnFrame3();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DepositPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -122,11 +129,11 @@ public class DepositPageController {
                 + "\n ACCOUNT HOLDER"
                 + "\n ______________"
                 + "\n FULL NAMES:"
-                + "\n -" + ConstantVariables.SU_NAME+" "+ ConstantVariables.SU_SURNAME
+                + "\n -" + ConstantVariables.SU_NAME + " " + ConstantVariables.SU_SURNAME
                 + "\n ACCOUNT NUMBER:"
                 + "\n -" + ConstantVariables.SU_ACCNUM
                 + "\n AMOUNT DEPOSITED:"
-                + "\n -R " + inAmnt
+                + "\n -R " + ConstantVariables.D_amount_In
                 + "\n AVAILABE AMOUNT:"
                 + "\n -R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)
                 + "\n ______________"
@@ -151,8 +158,18 @@ public class DepositPageController {
             checker = false;
             errorMssgDis.setText("Enter Amount");
             errorMssgDis.setTextFill(Paint.valueOf("#FF0000"));
-        }else{
-            inAmnt = Double.valueOf(inAmount.getText());
+        } else {
+            amount = inAmount.getText();
+            System.out.println(amount);
+            try {
+                // Attempt to remove any leading or trailing whitespaces and then convert to a Double
+                amount = amount.trim();
+                ConstantVariables.D_amount_In = Double.valueOf(amount);
+                System.out.println(ConstantVariables.D_amount_In);
+            } catch (NumberFormatException e) {
+                // Handle the case where the text cannot be parsed as a double
+                // Display an error message or take appropriate action
+            }
         }
         for (int i = 0; i < inAmount.getText().length(); i++) {
             char ch = inAmount.getText().charAt(i);

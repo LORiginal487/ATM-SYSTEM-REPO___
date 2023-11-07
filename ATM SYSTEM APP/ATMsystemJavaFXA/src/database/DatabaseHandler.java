@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Paint;
 
 /**
  *
@@ -86,17 +87,18 @@ public class DatabaseHandler extends ConstantsDB {
 
     public void depositIntDb(Double ammountIn) throws ClassNotFoundException, SQLException {//method for adding deposited amount into available amount
         Double userbalance = ConstantVariables.SU_BALANCE + ammountIn;
-        updateBalance(ConstantVariables.SU_ACCNUM, ammountIn);
+        System.out.println("------" + userbalance);
+        updateBalance(ConstantVariables.SU_ACCNUM, userbalance);
     }
 
     public Double getAvailAmntDb(String accnum) throws ClassNotFoundException {//method for getting available amount
-        String Query = "SELECT " +TB_C_Balance+ " FROM " + DB_TB_Name + " WHERE " + TB_C_Accnum + " = ?";
+        String Query = "SELECT " + TB_C_Balance + " FROM " + DB_TB_Name + " WHERE " + TB_C_Accnum + " = ?";
         try (PreparedStatement preparedStatement = getDbCon().prepareStatement(Query)) {
             preparedStatement.setString(1, accnum); // Set the parameter for the WHERE clause
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
-                    if(accnum.equals(ConstantVariables.SU_ACCNUM)){
-                    ConstantVariables.SU_BALANCE =rs.getDouble(TB_C_Balance);
+                    if (accnum.equals(ConstantVariables.SU_ACCNUM)) {
+                        ConstantVariables.SU_BALANCE = rs.getDouble(TB_C_Balance);
                     }
                     return rs.getDouble(TB_C_Balance);
                 } else {
@@ -108,7 +110,7 @@ public class DatabaseHandler extends ConstantsDB {
             // Handle any database-related exceptions here
             return 0.0;
         }
-        
+
     }
 
     public String getAccntNumDb() {//method for getting account number
@@ -121,34 +123,69 @@ public class DatabaseHandler extends ConstantsDB {
 
     public void withdrawFromDb(Double ammountIn) throws ClassNotFoundException, SQLException {//method for subtracting withdrawn amount from available amount
         Double userbalance = ConstantVariables.SU_BALANCE - ammountIn;
-        updateBalance(ConstantVariables.SU_ACCNUM, ammountIn);
-    }
-
-    public boolean look4accnInDb(String accntIn) {//method for subtracting withdrawn amount from available amount
-        return true;
-    }
-
-    public void transferDb(Double ammountIn, String accntIn) throws ClassNotFoundException, SQLException {//method for getting user name
-        Double reNbalance = getAvailAmntDb(accntIn) + ammountIn;
-        Double userbalance = ConstantVariables.SU_BALANCE - ammountIn;
-        updateBalance(accntIn, reNbalance);
         updateBalance(ConstantVariables.SU_ACCNUM, userbalance);
     }
 
-    public void changeNameDb(String name) {//method for getting user name
+    public boolean look4accnInDb(String accntIn, Label error) {//method for subtracting withdrawn amount from available amount
 
+        String query = "SELECT " + TB_C_Name + " FROM " + DB_TB_Name + " WHERE " + TB_C_Accnum + " = ?";
+
+        try (PreparedStatement preparedStatement = getDbCon().prepareStatement(query)) {
+            preparedStatement.setString(1, accntIn);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("123234354654765768");
+                        return true;
+                    
+                } else {
+                    return false;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            error.setText("Invalid account");
+            error.setTextFill(Paint.valueOf("#FF0000"));
+            return false;
+        }
+
+    }
+
+    public boolean transferDb(Double ammountIn, String accntIn, Label error) {
+        try {
+            //method for getting user name
+            if (look4accnInDb(accntIn, error)) {
+                System.out.println("1111-_-____---_-___-__-_--_-");
+                Double reNbalance = getAvailAmntDb(accntIn) + ammountIn;
+                Double userbalance = ConstantVariables.SU_BALANCE - ammountIn;
+                updateBalance(accntIn, reNbalance);
+                updateBalance(ConstantVariables.SU_ACCNUM, userbalance);
+                return true;
+            } else {
+                error.setText("Invalid account");
+                error.setTextFill(Paint.valueOf("#FF0000"));
+                return false;
+            }
+        } catch (ClassNotFoundException ex) {
+            error.setText("Invalid account");
+            error.setTextFill(Paint.valueOf("#FF0000"));
+            return false;
+        }
+    }
+
+    public void changeNameDb(String name) {//method for getting user name
+        updateStrings(name, TB_C_Name);
     }
 
     public void changeSurnameDb(String Surname) {//method for getting user name
-
+        updateStrings(Surname, TB_C_Surname);
     }
 
     public void changeEmailDb(String Email) {//method for getting user name
-
+        updateStrings(Email, TB_C_Email);
     }
 
     public void changePhoneDb(String Phone) {//method for getting user name
-
+        updateStrings(Phone, TB_C_Phone);
     }
 
     public void setUserDetails() throws ClassNotFoundException, SQLException {
@@ -171,11 +208,35 @@ public class DatabaseHandler extends ConstantsDB {
             // Handle any database-related exceptions here
         }
     }
-    public void updateBalance(String accnt, Double aMNT) throws ClassNotFoundException, SQLException {
-                String Query = "UPDATE " +DB_TB_Name+ " SET "+  TB_C_Balance +" = ? WHERE " + TB_C_Accnum + " = ?";
-                statement = (PreparedStatement) getDbCon().prepareStatement(Query);
-                statement.setDouble(1, aMNT);
-                statement.setString(2, accnt);
+
+    public void updateBalance(String accnt, Double aMNT) {
+        String Query = "UPDATE " + DB_TB_Name + " SET " + TB_C_Balance + " = ? WHERE " + TB_C_Accnum + " = ?";
+        try {
+            statement = (PreparedStatement) getDbCon().prepareStatement(Query);
+            statement.setDouble(1, aMNT);
+            statement.setString(2, accnt);
+            statement.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void updateStrings(String string, String column) {
+        String Query = "UPDATE " + DB_TB_Name + " SET " + column + " = ? WHERE " + TB_C_Accnum + " = ?";
+        try {
+            statement = (PreparedStatement) getDbCon().prepareStatement(Query);
+            statement.setString(1, string);
+            statement.setString(2, ConstantVariables.SU_ACCNUM);
+            statement.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

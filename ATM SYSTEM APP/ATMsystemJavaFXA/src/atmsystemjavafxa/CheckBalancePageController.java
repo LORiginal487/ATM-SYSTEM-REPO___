@@ -61,8 +61,8 @@ public class CheckBalancePageController {
 
     }
     private void displayDetails() throws ClassNotFoundException {
-        amntDis1.setText("R "+databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
-        userAccNumDis.setText(databaseHandler.getAccntNumDb());
+        amntDis1.setText("R "+databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM));
+        userAccNumDis.setText(ConstantVariables.SU_ACCNUM);
     }
 
     private void asserts() {

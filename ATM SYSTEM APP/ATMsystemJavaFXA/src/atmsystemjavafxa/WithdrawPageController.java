@@ -42,19 +42,19 @@ public class WithdrawPageController {
     private ImageView backPic;
 
     @FXML
-    private AnchorPane depositFrame1,depositFrame2,depositFrame3;
+    private AnchorPane depositFrame1, depositFrame2, depositFrame3;
 
     @FXML
-    private Label errorMssgDis,headingText;
+    private Label errorMssgDis, headingText;
 
     @FXML
     private TextField inAmount;
 
     @FXML
-    private Button menu,noSlip,signInBck;
+    private Button menu, noSlip, signInBck;
 
     @FXML
-    private Label slip,userAccNumDis, userAccNumDis1,userAccNumDis11;
+    private Label slip, userAccNumDis, userAccNumDis1, userAccNumDis11;
 
     @FXML
     private Button wDoneBtn;
@@ -68,28 +68,36 @@ public class WithdrawPageController {
     void initialize() throws ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
         whileOnFrame1();
-        whileOnFrame2();
-        whileOnFrame3();
+
         OnButtonPress();
         asserts();
     }
+
     private void whileOnFrame1() throws ClassNotFoundException {
-        userAccNumDis.setText(databaseHandler.getAccntNumDb());
-        amntDis1.setText("R "+databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
+        userAccNumDis.setText(ConstantVariables.SU_ACCNUM);
+        amntDis1.setText("R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM));
         wDoneBtn.setOnAction((event) -> {
             if (validateAmount()) {
-                inAmnt = Double.valueOf(inAmount.getText());
                 try {
-                    databaseHandler.withdrawFromDb(inAmnt);
-                    depositFrame1.setVisible(false);
-                depositFrame2.setVisible(true);
-                
+                    ConstantVariables.W_amount_In = Double.valueOf(inAmount.getText());
+                    if (ConstantVariables.W_amount_In > databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)) {
+                        try {
+                            databaseHandler.withdrawFromDb(ConstantVariables.W_amount_In);
+                            depositFrame1.setVisible(false);
+                            depositFrame2.setVisible(true);
+                            whileOnFrame2();
+
+                        } catch (ClassNotFoundException | SQLException ex) {
+                            Logger.getLogger(WithdrawPageController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        errorMssgDis.setText("Insufficient amount, You broke!");
+                        errorMssgDis.setTextFill(Paint.valueOf("#FF0000"));
+                    }
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(WithdrawPageController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    Logger.getLogger(WithdrawPageController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
         });
     }
@@ -101,6 +109,11 @@ public class WithdrawPageController {
         yesSlip.setOnAction((event) -> {
             depositFrame2.setVisible(false);
             depositFrame3.setVisible(true);
+            try {
+                whileOnFrame3();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(WithdrawPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -109,13 +122,13 @@ public class WithdrawPageController {
                 + "\n ACCOUNT HOLDER"
                 + "\n ______________"
                 + "\n FULL NAMES:"
-                + "\n -" + ConstantVariables.SU_NAME+" "+ ConstantVariables.SU_SURNAME
+                + "\n -" + ConstantVariables.SU_NAME + " " + ConstantVariables.SU_SURNAME
                 + "\n ACCOUNT NUMBER:"
                 + "\n -" + ConstantVariables.SU_ACCNUM
                 + "\n AMOUNT WITHDRAWN:"
-                + "\n -R "+inAmnt
+                + "\n -R " + ConstantVariables.W_amount_In
                 + "\n AVAILABE AMOUNT:"
-                + "\n -R "+databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)
+                + "\n -R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)
                 + "\n ______________"
                 + "\n THANK YOU");
         menu.setOnAction((event) -> {
@@ -173,6 +186,7 @@ public class WithdrawPageController {
         assert yesSlip != null : "fx:id=\"yesSlip\" was not injected: check your FXML file 'WithdrawPage.fxml'.";
 
     }
+
     public void PageLoaderShow(Button button, String fxmlName) {
         button.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
@@ -187,6 +201,5 @@ public class WithdrawPageController {
         stage.setScene(new Scene(root));
         stage.show();
     }
-
 
 }

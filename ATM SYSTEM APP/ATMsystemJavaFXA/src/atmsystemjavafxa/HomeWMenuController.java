@@ -4,60 +4,52 @@
  */
 package atmsystemjavafxa;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import utilities.ConstantVariables;
-import utilities.ConstatnMethods;
 
 public class HomeWMenuController {
-    
+
     @FXML
     private ResourceBundle resources;
-    
+
     @FXML
     private URL location;
-    
+
     @FXML
     private Label TOP_TEXT, TOP_TEXT1, TOP_TEXT2, TOP_TEXT21, TOP_TEXT211, TOP_TEXT2111, TOP_TEXT21111, accntnumDis;
-    
+
     @FXML
     private AnchorPane chckBalanceBar, depositBar;
-    
+
     @FXML
     private Label emailDis;
-    
+
     @FXML
     private AnchorPane formContainer;
-    
+
     @FXML
     private Label headingText, nameDis, nameDis1, nameDis11, nameDis12, nameDis13, phoneDis;
-    
+
     @FXML
     private Button profileSettingsBtn, signInBck;
-    
+
     @FXML
     private Label surnameDis;
-    
+
     @FXML
     private AnchorPane transactBar, withdrawBar;
     //ConstatnMethods constatnMethods;
-    
+
     @FXML
     void initialize() {
         //constatnMethods = new ConstatnMethods();
@@ -92,17 +84,17 @@ public class HomeWMenuController {
         assert surnameDis != null : "fx:id=\"surnameDis\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
         assert transactBar != null : "fx:id=\"transactBar\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
         assert withdrawBar != null : "fx:id=\"withdrawBar\" was not injected: check your FXML file 'HomeW-Menu.fxml'.";
-        
+
     }
 
     private void onButtonPress() {//when you press a button
         signInBck.setOnAction((event) -> {
-            PageLoaderShow(signInBck,ConstantVariables.FXML_SI);
+            PageLoaderShow(ConstantVariables.FXML_SI);
         });
         profileSettingsBtn.setOnAction((event) -> {
-            PageLoaderShow(signInBck,ConstantVariables.FXML_PS);
+            PageLoaderShow(ConstantVariables.FXML_PS);
         });
-        
+
     }
 
     private void displayDetails() {
@@ -115,33 +107,34 @@ public class HomeWMenuController {
 
     private void ToDoSelection() {
         depositBar.setOnMouseClicked((event) -> {
-            PageLoaderShow(signInBck,ConstantVariables.FXML_D);
+            PageLoaderShow(ConstantVariables.FXML_D);
         });
         withdrawBar.setOnMouseClicked((event) -> {
-            PageLoaderShow(signInBck,ConstantVariables.FXML_W);
+            PageLoaderShow(ConstantVariables.FXML_W);
         });
         transactBar.setOnMouseClicked((event) -> {
-            PageLoaderShow(signInBck,ConstantVariables.FXML_T);
+            PageLoaderShow(ConstantVariables.FXML_T);
+
         });
         chckBalanceBar.setOnMouseClicked((event) -> {
-            PageLoaderShow(signInBck,ConstantVariables.FXML_CB);
+            PageLoaderShow(ConstantVariables.FXML_CB);
         });
     }
-    public void PageLoaderShow(Button button, String fxmlName) {
-        button.getScene().getWindow().hide();
+
+    public void PageLoaderShow(String fxmlName) {
+        profileSettingsBtn.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxmlName));
         try {
             loader.load();
+            System.out.println("------------");
         } catch (IOException ex) {
-            System.out.println("cant open\n" + ex);
+            System.out.println("-------cant open\n" + ex);
         }
         Parent root = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
     }
-    
+
 }
-
-

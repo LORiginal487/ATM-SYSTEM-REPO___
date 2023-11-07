@@ -96,28 +96,26 @@ public class TransferPageController {
     void initialize() throws ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
         whileOnFrame1();
-        whileOnFrame2();
-        whileOnFrame3();
         OnButtonPress();
         asserts();
     }
 
     private void whileOnFrame1() throws ClassNotFoundException {
         userAccNumDis.setText(ConstantVariables.SU_ACCNUM);
-        amntDis1.setText("R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM).toString());
+        amntDis1.setText("R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM));
         tDoneBtn.setOnAction((event) -> {
+            System.out.println("____----____---___");
+
             try {
                 if (validateAmount()) {
-                    accountReceiver = inACCNT.getText();
-                    try {
-                        databaseHandler.transferDb(inAmnt, accountReceiver);
+                    ConstantVariables.T_account_In = inACCNT.getText();
+                    boolean transferSuccess = databaseHandler.transferDb(ConstantVariables.T_amount_In, ConstantVariables.T_account_In, errorMssgDis);
+
+                    if (transferSuccess) {
                         depositFrame1.setVisible(false);
                         depositFrame2.setVisible(true);
-                    } catch (ClassNotFoundException | SQLException ex) {
-                        Logger.getLogger(TransferPageController.class.getName()).log(Level.SEVERE, null, ex);
+                        whileOnFrame2();
                     }
-                    
-                    
                 }
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TransferPageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,41 +125,47 @@ public class TransferPageController {
 
     private void whileOnFrame2() {
         noSlip.setOnAction((event) -> {
-            PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+            PageLoaderShow(ConstantVariables.FXML_H);
         });
         yesSlip.setOnAction((event) -> {
             depositFrame2.setVisible(false);
             depositFrame3.setVisible(true);
+            try {
+                whileOnFrame3();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TransferPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
     }
 
     private void whileOnFrame3() throws ClassNotFoundException {
-        slip.setText(slip.getText()+"\n"
+        slip.setText(slip.getText() + "\n"
                 + "\n ACCOUNT HOLDER"
                 + "\n ______________"
                 + "\n FULL NAMES:"
-                + "\n -" + ConstantVariables.SU_NAME+" "+ ConstantVariables.SU_SURNAME
+                + "\n -" + ConstantVariables.SU_NAME + " " + ConstantVariables.SU_SURNAME
                 + "\n ACCOUNT NUMBER:"
                 + "\n -" + ConstantVariables.SU_ACCNUM
                 + "\n AMOUNT TRANSFERED:"
-                + "\n -R " + inAmnt
+                + "\n -R " + ConstantVariables.T_amount_In
                 + "\n AVAILABE AMOUNT:"
                 + "\n -R " + databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)
                 + "\n TO ACCOUNT NUMBER:"
-                + "\n -" + inACCNT
+                + "\n -" + ConstantVariables.T_account_In
                 + "\n ______________"
                 + "\n THANK YOU");
         menu.setOnAction((event) -> {
-            PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+            PageLoaderShow(ConstantVariables.FXML_H);
         });
     }
 
     private void OnButtonPress() {
         backBtn.setOnAction((event) -> {
-            PageLoaderShow(backBtn, ConstantVariables.FXML_H);
+            PageLoaderShow(ConstantVariables.FXML_H);
         });
         signInBck.setOnAction((event) -> {
-            PageLoaderShow(backBtn, ConstantVariables.FXML_SI);
+            PageLoaderShow(ConstantVariables.FXML_SI);
         });
     }
 
@@ -181,11 +185,7 @@ public class TransferPageController {
             }
 
         }
-        if (!databaseHandler.look4accnInDb(inACCNT.getText())) {
-            checker = false;
-            errorMssgDis.setText("InValid Account");
-            errorMssgDis.setTextFill(Paint.valueOf("#FF0000"));
-        }
+
         return checker;
     }
 
@@ -207,8 +207,8 @@ public class TransferPageController {
                 }
 
             }
-            inAmnt = Double.valueOf(inAMNT.getText());
-            if (inAmnt > databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)) {
+            ConstantVariables.T_amount_In = Double.valueOf(inAMNT.getText());
+            if (ConstantVariables.T_amount_In > databaseHandler.getAvailAmntDb(ConstantVariables.SU_ACCNUM)) {
                 checker = false;
 
                 errorMssgDis.setText("Insufficient funds, You broke");
@@ -244,8 +244,8 @@ public class TransferPageController {
 
     }
 
-    public void PageLoaderShow(Button button, String fxmlName) {
-        button.getScene().getWindow().hide();
+    public void PageLoaderShow(String fxmlName) {
+        signInBck.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxmlName));
         try {

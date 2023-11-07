@@ -29,7 +29,11 @@ public class ConstantVariables {
     public static String FXML_PS="ProfileSettingsPage.fxml";
     public static String FXML_T="TransferPage.fxml";
     public static String FXML_W="WithdrawPage.fxml";
-    
+    //--------------
+    public static  Double D_amount_In;
+    public static  Double W_amount_In;
+    public static  Double T_amount_In;
+    public static  String T_account_In;
     
 
     
